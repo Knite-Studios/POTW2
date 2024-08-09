@@ -3,23 +3,24 @@ using UnityEngine.UI;
 
 public class WaveBar : MonoBehaviour
 {
+    public static WaveBar Instance { get; private set; }
 
-    public static WaveBar instance;
-
-    public Slider waveSlider;
-    [Header("HideInInspector")]
+    [SerializeField] private Slider waveSlider;
     public bool isPaused = true;
+    
     private float countDown;
     private float time;
+    
     private void Awake()
     {
-        if (instance != null)
+        if (Instance != null)
         {
             Debug.LogError("More than one wave bar manager in the scene!");
+            Destroy(gameObject);
             return;
         }
 
-        instance = this;
+        Instance = this;
     }
 
     private void Update()

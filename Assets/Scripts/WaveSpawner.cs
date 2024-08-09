@@ -29,7 +29,7 @@ public class WaveSpawner : MonoBehaviour
         if (waveIndex == waves.Length)
         {
             // TODO: do animation here
-            GameManager.instance.wonLevel();
+            GameManager.Instance.wonLevel();
             enabled = false;
         }
 
@@ -47,11 +47,11 @@ public class WaveSpawner : MonoBehaviour
 
     private IEnumerator spawnWave()
     {
-        PlayerManager.instance.rounds++;
+        PlayerManager.Instance.rounds++;
         var wave = waves[waveIndex];
         var t = 0f;
         t += wave.numberZombies * wave.spawnDelay;
-        WaveBar.instance.startBar(t);
+        WaveBar.Instance.startBar(t);
 
         for (var i = 0; i < wave.numberZombies; i++)
         {

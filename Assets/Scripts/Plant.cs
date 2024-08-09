@@ -2,57 +2,55 @@ using UnityEngine;
 
 public class Plant : MonoBehaviour
 {
-
     [Header("Attributes")]
     public float fireRange = 20f;
     public float firstFireTime = 2f;
     public float secondFireTime;
     public string zombieTag = "Zombie";
     public GameObject bulletPrefab;
-    private float fireConutdown;
-    private bool hasDoubleChoot;
+    
+    private float fireCountdown;
+    private bool hasDoubleShoot;
     private bool isCurrentFirst = true;
-
-    [Header("Unity setup fields")]
     private Transform target;
 
     private void Start()
     {
-        hasDoubleChoot = secondFireTime != 0f;
-        InvokeRepeating("UpdateTarget", 0f, 0.5f);
+        hasDoubleShoot = secondFireTime != 0f;
+        InvokeRepeating(nameof(UpdateTarget), 0f, 0.5f);
     }
 
     private void Update()
     {
-        if (target == null)
+        if (!target)
         {
             return;
         }
 
-        if (fireConutdown <= 0f)
+        if (fireCountdown <= 0f)
         {
             shoot();
-            if (!hasDoubleChoot)
+            if (!hasDoubleShoot)
             {
-                fireConutdown = firstFireTime;
+                fireCountdown = firstFireTime;
             }
             else
             {
                 // TODO: fix the delay that happens sometime
                 if (isCurrentFirst)
                 {
-                    fireConutdown = firstFireTime;
+                    fireCountdown = firstFireTime;
                 }
                 else
                 {
-                    fireConutdown = secondFireTime;
+                    fireCountdown = secondFireTime;
                 }
 
                 isCurrentFirst = !isCurrentFirst;
             }
         }
 
-        fireConutdown -= Time.deltaTime;
+        fireCountdown -= Time.deltaTime;
     }
 
     private void UpdateTarget()

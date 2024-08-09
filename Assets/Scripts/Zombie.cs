@@ -10,6 +10,7 @@ public class Zombie : MonoBehaviour
     public float speed;
     [HideInInspector]
     public float slownessTimer;
+    
     private bool isDead;
 
     private void Start()

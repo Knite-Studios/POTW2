@@ -2,38 +2,29 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
-    public static GameManager instance;
-    [HideInInspector]
     public static bool isGameEnded;
-    public string menuScene = "MainMenu";
-    public string levelSelectorScene = "LevelSelector";
+    
+    public const string MenuScene = "MainMenu";
+    public const string LevelSelectorScene = "LevelSelector";
+    
     public GameObject gameOverUi;
     public GameObject pauseMenuUi;
     public Text roundsText;
     public SceneChanger sceneChanger;
     public bool playBackgroundMusic = true;
+    
     private float brains;
 
     private void Start()
     {
-        if (instance != null)
-        {
-            Destroy(gameObject);
-            Debug.LogError("More than one game manager in the scene!");
-        }
-        else
-        {
-            instance = this;
-        }
-
         isGameEnded = false;
         brains = 5f;
-        AudioManager.instance.stop("MenuBackground");
+        AudioManager.Instance.stop("MenuBackground");
         if (playBackgroundMusic)
         {
-            AudioManager.instance.play("GamePlayBackground");
+            AudioManager.Instance.play("GamePlayBackground");
         }
     }
 
@@ -53,7 +44,7 @@ public class GameManager : MonoBehaviour
     private void endGame()
     {
         gameOverUi.SetActive(true);
-        roundsText.text = PlayerManager.instance.rounds.ToString();
+        roundsText.text = PlayerManager.Instance.rounds.ToString();
         isGameEnded = true;
         Debug.Log("Game over!");
         Time.timeScale = 0f;
@@ -82,12 +73,12 @@ public class GameManager : MonoBehaviour
     public void menu()
     {
         Time.timeScale = 1f;
-        sceneChanger.transitionTo(menuScene);
+        sceneChanger.transitionTo(MenuScene);
     }
 
     public void wonLevel()
     {
-        sceneChanger.transitionTo(levelSelectorScene);
+        sceneChanger.transitionTo(LevelSelectorScene);
     }
 
     public void eatBrain()

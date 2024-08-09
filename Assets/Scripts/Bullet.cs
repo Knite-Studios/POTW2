@@ -8,14 +8,9 @@ public class Bullet : MonoBehaviour
 
     private Transform target;
 
-    private void Start()
-    {
-
-    }
-
     private void Update()
     {
-        if (target == null)
+        if (!target)
         {
             Destroy(gameObject);
             return;
@@ -43,7 +38,7 @@ public class Bullet : MonoBehaviour
         Destroy(gameObject);
         makeDamage(target);
         // TODO: change sound depending on zombie type
-        AudioManager.instance.play("HitNormal");
+        AudioManager.Instance.play("HitNormal");
     }
 
     private void makeDamage(Transform target)

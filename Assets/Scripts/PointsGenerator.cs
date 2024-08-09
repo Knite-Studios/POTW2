@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class PointsGenerator : MonoBehaviour
 {
@@ -8,15 +9,22 @@ public class PointsGenerator : MonoBehaviour
     public Vector2 size;
     public float pointDelay = 5f;
     public float fallingSpeed = 60f;
+    
     private float maximumDepth;
     private GameObject point;
     private RectTransform rectTransform;
+    private RectTransform canvasRectTransform;
     private float timer;
+
+    private void Awake()
+    {
+        canvasRectTransform = canvas.GetComponent<RectTransform>();
+    }
 
     private void Start()
     {
         timer = pointDelay;
-        maximumDepth = -canvas.GetComponent<RectTransform>().rect.height - size.y / 2;
+        maximumDepth = -canvasRectTransform.rect.height - size.y / 2;
     }
 
     private void Update()
@@ -51,7 +59,7 @@ public class PointsGenerator : MonoBehaviour
         rectTransform.localScale = Vector3.one;
         rectTransform.anchorMin = new Vector2(0.5f, 1f);
         rectTransform.anchorMax = new Vector2(0.5f, 1f);
-        var tmp = canvas.GetComponent<RectTransform>().rect.width;
+        var tmp = canvasRectTransform.rect.width;
         var x = Random.Range(-tmp / 4, tmp / 4);
         rectTransform.anchoredPosition = new Vector2(x, size.y / 2);
         rectTransform.sizeDelta = size;
@@ -63,7 +71,7 @@ public class PointsGenerator : MonoBehaviour
         var btn = point.AddComponent<Button>();
         btn.onClick.AddListener(() =>
         {
-            MoneyManager.instance.onPointClicked();
+            MoneyManager.Instance.onPointClicked();
             Destroy(point);
         });
     }

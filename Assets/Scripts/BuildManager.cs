@@ -1,50 +1,37 @@
 using UnityEngine;
 
-public class BuildManager : MonoBehaviour
+public class BuildManager : Singleton<BuildManager>
 {
-    public static BuildManager instance;
     [HideInInspector]
     public bool isRemoveToolSelected;
     [HideInInspector]
     public bool isUpgrading;
+    
     private MoneyManager moneyManager;
     private PlantBlueprint toBuild;
-
-    private void Awake()
-    {
-        if (instance != null)
-        {
-            Destroy(gameObject);
-            Debug.LogError("More than one build manage in the scene!");
-        }
-        else
-        {
-            instance = this;
-        }
-    }
 
     private void Start()
     {
         isRemoveToolSelected = false;
         isUpgrading = false;
-        moneyManager = MoneyManager.instance;
+        moneyManager = MoneyManager.Instance;
     }
 
     public bool canBuild() => toBuild != null;
 
-    public bool hasMoney() => moneyManager.Money >= toBuild.cost;
+    public bool hasMoney() => moneyManager.money >= toBuild.cost;
 
     public void selectPlantToBuild(PlantBlueprint plantBlueprint)
     {
         toBuild = plantBlueprint;
         isRemoveToolSelected = false;
         isUpgrading = plantBlueprint == null ? false : plantBlueprint.isUpgradePlant;
-        AudioManager.instance.play("Select");
+        AudioManager.Instance.play("Select");
     }
 
     public void buildPlantOn(Node node)
     {
-        if (moneyManager.Money < toBuild.cost)
+        if (moneyManager.money < toBuild.cost)
         {
             selectPlantToBuild(null);
             Debug.Log("Not enough money");
@@ -56,13 +43,13 @@ public class BuildManager : MonoBehaviour
         node.plant = plant;
         node.isPlantUpgradeable = toBuild.isUpgradeable;
         selectPlantToBuild(null);
-        AudioManager.instance.play("Plant");
+        AudioManager.Instance.play("Plant");
     }
 
     public void upgradePlantOn(Node node)
     {
         // TODO : remove duplicate code
-        if (moneyManager.Money < toBuild.cost)
+        if (moneyManager.money < toBuild.cost)
         {
             selectPlantToBuild(null);
             Debug.Log("Not enough money");
@@ -82,7 +69,7 @@ public class BuildManager : MonoBehaviour
         node.plant = plant;
         node.isPlantUpgradeable = toBuild.isUpgradeable;
         selectPlantToBuild(null);
-        AudioManager.instance.play("Plant");
+        AudioManager.Instance.play("Plant");
     }
 
     public void removeToolClicked()
@@ -94,6 +81,6 @@ public class BuildManager : MonoBehaviour
             isUpgrading = false;
         }
 
-        AudioManager.instance.play("Select");
+        AudioManager.Instance.play("Select");
     }
 }

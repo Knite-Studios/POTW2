@@ -4,8 +4,10 @@ public class SunFlower : MonoBehaviour
 {
     public Canvas pointCanvas;
     public float pointDelay = 5f;
+    
     private bool isShowing;
     private float timer;
+    
     private void Start()
     {
         timer = pointDelay;
@@ -34,7 +36,7 @@ public class SunFlower : MonoBehaviour
     public void pointClicked()
     {
         Debug.Log("Point clicked");
-        MoneyManager.instance.onPointClicked();
+        MoneyManager.Instance.onPointClicked();
         timer = pointDelay;
         hidePoint();
     }

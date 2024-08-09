@@ -8,39 +8,38 @@ public class Node : MonoBehaviour
     public GameObject plant;
     [Header("HideInInspector")]
     public bool isPlantUpgradeable;
-    private BuildManager buildManager;
+    
     private Renderer rend;
     private Color startColor;
 
     private void Start()
     {
-        buildManager = BuildManager.instance;
         rend = GetComponent<Renderer>();
         startColor = rend.material.color;
     }
 
     private void OnMouseDown()
     {
-        if (buildManager.isRemoveToolSelected)
+        if (BuildManager.Instance.isRemoveToolSelected)
         {
             if (plant != null)
             {
                 Destroy(plant);
                 isPlantUpgradeable = false;
-                AudioManager.instance.play("Remove");
+                AudioManager.Instance.play("Remove");
             }
 
-            buildManager.removeToolClicked();
+            BuildManager.Instance.removeToolClicked();
             rend.material.color = startColor;
         }
 
-        if (!buildManager.canBuild())
+        if (!BuildManager.Instance.canBuild())
         {
             Debug.Log("plant is null");
             return;
         }
 
-        if (buildManager.isUpgrading)
+        if (BuildManager.Instance.isUpgrading)
         {
             if (plant == null)
             {
@@ -50,7 +49,7 @@ public class Node : MonoBehaviour
             else
             {
                 // TODO : make sure this is the correct plant
-                buildManager.upgradePlantOn(this);
+                BuildManager.Instance.upgradePlantOn(this);
                 rend.material.color = startColor;
             }
         }
@@ -63,7 +62,7 @@ public class Node : MonoBehaviour
             }
             else
             {
-                buildManager.buildPlantOn(this);
+                BuildManager.Instance.buildPlantOn(this);
                 rend.material.color = startColor;
             }
         }
@@ -72,7 +71,7 @@ public class Node : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        if (buildManager.isRemoveToolSelected)
+        if (BuildManager.Instance.isRemoveToolSelected)
         {
             if (plant == null)
             {
@@ -86,14 +85,14 @@ public class Node : MonoBehaviour
             return;
         }
 
-        if (!buildManager.canBuild())
+        if (!BuildManager.Instance.canBuild())
         {
             return;
         }
 
-        if (buildManager.hasMoney())
+        if (BuildManager.Instance.hasMoney())
         {
-            if (buildManager.isUpgrading)
+            if (BuildManager.Instance.isUpgrading)
             {
                 if (plant == null || !isPlantUpgradeable)
                 {

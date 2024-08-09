@@ -5,13 +5,13 @@ public class ZombieMovement : MonoBehaviour
 {
     public Animator animator;
     public Collider plant;
+    
     private bool isEating;
     private int isEatingHash;
     private Transform target;
     private int waveNumber;
     private Zombie zombie;
-
-
+    
     private void Start()
     {
         zombie = GetComponent<Zombie>();
@@ -26,7 +26,7 @@ public class ZombieMovement : MonoBehaviour
         if (!isEating)
         {
             var dir = target.position - transform.position;
-            transform.Translate(dir.normalized * zombie.speed * Time.deltaTime, Space.World);
+            transform.Translate(dir.normalized * (zombie.speed * Time.deltaTime), Space.World);
 
             if (Vector3.Distance(transform.position, target.position) <= 0.5f)
             {
@@ -42,7 +42,7 @@ public class ZombieMovement : MonoBehaviour
                 zombie.slownessTimer -= Time.deltaTime;
             }
         }
-        else if (plant == null)
+        else if (!plant)
         {
             isEating = false;
             animator.SetBool(isEatingHash, false);
@@ -51,7 +51,7 @@ public class ZombieMovement : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Plant")
+        if (other.gameObject.CompareTag("Plant"))
         {
             isEating = true;
             plant = other;
@@ -61,7 +61,7 @@ public class ZombieMovement : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "Plant")
+        if (other.gameObject.CompareTag("Plant"))
         {
             isEating = false;
             animator.SetBool(isEatingHash, false);

@@ -3,9 +3,9 @@ using UnityEngine.Events;
 
 public class HealthObject : MonoBehaviour
 {
-
     public float health = 5f;
     public UnityEvent objectDiedCallback;
+    
     private float currentHealth;
 
     private void Start()
@@ -13,18 +13,13 @@ public class HealthObject : MonoBehaviour
         currentHealth = health;
     }
 
-    private void Update()
-    {
-
-    }
-
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Zombie")
+        if (other.gameObject.CompareTag("Zombie"))
         {
             // Debug.Log("Zombie approached an object");
         }
-        else if (other.gameObject.tag == "ZombieArm")
+        else if (other.gameObject.CompareTag("ZombieArm"))
         {
             currentHealth -= 1f;
             checkDeath();
@@ -33,7 +28,7 @@ public class HealthObject : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "Zombie")
+        if (other.gameObject.CompareTag("Zombie"))
         {
             Debug.Log("Zombie disappeared");
         }

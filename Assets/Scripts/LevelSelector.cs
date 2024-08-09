@@ -6,10 +6,10 @@ public class LevelSelector : MonoBehaviour
 
     private void Start()
     {
-        if (AudioManager.instance.isPlaying("GamePlayBackground"))
+        if (AudioManager.Instance.isPlaying("GamePlayBackground"))
         {
-            AudioManager.instance.stop("GamePlayBackground");
-            AudioManager.instance.play("MenuBackground");
+            AudioManager.Instance.stop("GamePlayBackground");
+            AudioManager.Instance.play("MenuBackground");
         }
     }
 

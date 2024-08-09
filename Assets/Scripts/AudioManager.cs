@@ -1,24 +1,14 @@
 using System;
 using UnityEngine;
 
-public class AudioManager : MonoBehaviour
+public class AudioManager : Singleton<AudioManager>
 {
-    public static AudioManager instance;
     public Sound[] sounds;
 
-    private void Awake()
+    protected override void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-
+        base.Awake();
         loadAudioSources();
-        DontDestroyOnLoad(instance);
     }
 
     private void loadAudioSources()
@@ -33,24 +23,24 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void play(string name)
+    public void play(string soundName)
     {
-        var s = Array.Find(sounds, sound => sound.name == name);
+        var s = Array.Find(sounds, sound => sound.name == soundName);
         if (s == null)
         {
-            Debug.LogError("Sound " + name + " not found");
+            Debug.LogError("Sound " + soundName + " not found");
             return;
         }
 
         s.source.Play();
     }
 
-    public void stop(string name)
+    public void stop(string soundName)
     {
-        var s = Array.Find(sounds, sound => sound.name == name);
+        var s = Array.Find(sounds, sound => sound.name == soundName);
         if (s == null)
         {
-            Debug.LogError("Sound " + name + " not found");
+            Debug.LogError("Sound " + soundName + " not found");
             return;
         }
 
@@ -60,12 +50,12 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public bool isPlaying(string name)
+    public bool isPlaying(string soundName)
     {
-        var s = Array.Find(sounds, sound => sound.name == name);
+        var s = Array.Find(sounds, sound => sound.name == soundName);
         if (s == null)
         {
-            Debug.LogError("Sound " + name + " not found");
+            Debug.LogError("Sound " + soundName + " not found");
             return false;
         }
 
