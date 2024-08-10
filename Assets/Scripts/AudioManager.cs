@@ -1,15 +1,19 @@
 using System;
 using UnityEngine;
-using UnityEngine.Audio;
 
-public class AudioManager : MonoBehaviour {
+public class AudioManager : MonoBehaviour
+{
     public static AudioManager instance;
     public Sound[] sounds;
 
-    void Awake() {
-        if (instance == null) {
+    private void Awake()
+    {
+        if (instance == null)
+        {
             instance = this;
-        } else {
+        }
+        else
+        {
             Destroy(gameObject);
         }
 
@@ -17,8 +21,10 @@ public class AudioManager : MonoBehaviour {
         DontDestroyOnLoad(instance);
     }
 
-    void loadAudioSources() {
-        foreach(Sound s in sounds) {
+    private void loadAudioSources()
+    {
+        foreach (var s in sounds)
+        {
             s.source = gameObject.AddComponent<AudioSource>();
             s.source.clip = s.clip;
             s.source.volume = s.volume;
@@ -27,32 +33,42 @@ public class AudioManager : MonoBehaviour {
         }
     }
 
-    public void play(string name) {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
-        if (s == null) {
+    public void play(string name)
+    {
+        var s = Array.Find(sounds, sound => sound.name == name);
+        if (s == null)
+        {
             Debug.LogError("Sound " + name + " not found");
             return;
         }
+
         s.source.Play();
     }
-    
-    public void stop(string name) {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
-        if (s == null) {
+
+    public void stop(string name)
+    {
+        var s = Array.Find(sounds, sound => sound.name == name);
+        if (s == null)
+        {
             Debug.LogError("Sound " + name + " not found");
             return;
         }
-        if (s.source.isPlaying) {
+
+        if (s.source.isPlaying)
+        {
             s.source.Stop();
         }
     }
 
-    public bool isPlaying(string name) {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
-        if (s == null) {
+    public bool isPlaying(string name)
+    {
+        var s = Array.Find(sounds, sound => sound.name == name);
+        if (s == null)
+        {
             Debug.LogError("Sound " + name + " not found");
             return false;
         }
+
         return s.source.isPlaying;
     }
 }

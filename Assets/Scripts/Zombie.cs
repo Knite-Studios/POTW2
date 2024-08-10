@@ -9,31 +9,37 @@ public class Zombie : MonoBehaviour
     [HideInInspector]
     public float speed;
     [HideInInspector]
-    public float slownessTimer = 0f;
+    public float slownessTimer;
     private bool isDead;
 
-    void Start() {
+    private void Start()
+    {
         isDead = false;
         health = defaultHealth;
         speed = defaultSpeed;
     }
 
-    public void takeDamage(int amount) {
+    public void takeDamage(int amount)
+    {
         health -= amount;
-        if (health < 1 && !isDead) {
+        if (health < 1 && !isDead)
+        {
             die();
         }
     }
 
-    void die() {
+    private void die()
+    {
         isDead = true;
         WaveSpawner.zombiesAlive--;
         Destroy(gameObject);
     }
 
-    public void slowAndDamge(int amount, float slownessTime) {
+    public void slowAndDamge(int amount, float slownessTime)
+    {
         takeDamage(amount);
-        if (health > 0) {
+        if (health > 0)
+        {
             speed = defaultSpeed / 2;
             slownessTimer = slownessTime;
         }
