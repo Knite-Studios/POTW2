@@ -1,16 +1,20 @@
 using UnityEngine;
 
-public class LevelSelector : MonoBehaviour {
+public class LevelSelector : MonoBehaviour
+{
     public SceneChanger sceneChanger;
 
-    void Start() {
-        if (AudioManager.instance.isPlaying("GamePlayBackground")) {
-            AudioManager.instance.stop("GamePlayBackground");
-            AudioManager.instance.play("MenuBackground");
+    private void Start()
+    {
+        if (AudioManager.Instance.isPlaying("GamePlayBackground"))
+        {
+            AudioManager.Instance.stop("GamePlayBackground");
+            AudioManager.Instance.play("MenuBackground");
         }
     }
 
-    public void selectLevel(string levelName) {
+    public void selectLevel(string levelName)
+    {
         sceneChanger.transitionTo(levelName);
     }
 }

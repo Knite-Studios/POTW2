@@ -1,44 +1,40 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MoneyManager : MonoBehaviour {
-
-    public static MoneyManager instance;    
-    void Awake() {
-        if (instance != null) {
-            Debug.LogError("More than one moeny manager in the scene!");
-            return;
-        }
-        instance = this;
-    }
-    
+public class MoneyManager : Singleton<MoneyManager>
+{
     [HideInInspector]
-    public int Money;
+    public int money;
     public Text moneyCounter;
     public int startMoney = 50;
     public int pointAmount = 25;
-
-    void Start() {
-        Money = startMoney;
-        updateText();
-    }    
-
-    public void useMoney(int amount) {
-        Money -= amount;
+    
+    private void Start()
+    {
+        money = startMoney;
         updateText();
     }
 
-    public void onPointClicked() {
+    public void useMoney(int amount)
+    {
+        money -= amount;
+        updateText();
+    }
+
+    public void onPointClicked()
+    {
         gainMoney(pointAmount);
-        AudioManager.instance.play("CollectPoint");
+        AudioManager.Instance.play("CollectPoint");
     }
 
-    public void gainMoney(int amount) {
-        Money += amount;
+    public void gainMoney(int amount)
+    {
+        money += amount;
         updateText();
     }
 
-    void updateText() {
-        moneyCounter.text = "Hype = " + Money.ToString();
+    private void updateText()
+    {
+        moneyCounter.text = "Hype = " + money;
     }
 }

@@ -1,25 +1,42 @@
-using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WaveBar : MonoBehaviour
 {
+    public static WaveBar Instance { get; private set; }
 
-    public static WaveBar instance;    
-    void Awake() {
-        if (instance != null) {
+    [SerializeField] private Slider waveSlider;
+    public bool isPaused = true;
+    
+    private float countDown;
+    private float time;
+    
+    private void Awake()
+    {
+        if (Instance != null)
+        {
             Debug.LogError("More than one wave bar manager in the scene!");
+            Destroy(gameObject);
             return;
         }
-        instance = this;
+
+        Instance = this;
     }
 
-    public Slider waveSlider;
-    private float time = 0f;
-    private float countDown = 0f;
-    [Header("HideInInspector")]
-    public bool isPaused = true;
+    private void Update()
+    {
+        if (!isPaused)
+        {
+            if (countDown < time)
+            {
+                countDown += Time.deltaTime;
+                waveSlider.value = countDown;
+            }
+        }
+    }
 
-    public void startBar(float time) {
+    public void startBar(float time)
+    {
         this.time = time;
         waveSlider.maxValue = time;
         countDown = 0f;
@@ -27,21 +44,13 @@ public class WaveBar : MonoBehaviour
         isPaused = false;
     }
 
-    public void pause() {
+    public void pause()
+    {
         isPaused = true;
     }
 
-    public void resume() {
-        isPaused = false;
-    }
-
-    void Update()
+    public void resume()
     {
-        if (!isPaused){
-            if (countDown < time) {
-                countDown += Time.deltaTime;
-                waveSlider.value = countDown;
-            }
-        }
+        isPaused = false;
     }
 }

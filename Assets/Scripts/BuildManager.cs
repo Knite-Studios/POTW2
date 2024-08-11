@@ -1,89 +1,86 @@
 using UnityEngine;
 
-public class BuildManager : MonoBehaviour
+public class BuildManager : Singleton<BuildManager>
 {
-    public static BuildManager instance;
-    private PlantBlueprint toBuild;
-    private MoneyManager moneyManager;
     [HideInInspector]
     public bool isRemoveToolSelected;
     [HideInInspector]
     public bool isUpgrading;
-
-    void Awake() {
-        if (instance != null) {
-            Destroy(gameObject);
-            Debug.LogError("More than one build manage in the scene!");
-        } else {
-            instance = this;
-        }
-    }
     
-    void Start() {
+    private MoneyManager moneyManager;
+    private PlantBlueprint toBuild;
+
+    private void Start()
+    {
         isRemoveToolSelected = false;
         isUpgrading = false;
-        moneyManager = MoneyManager.instance;
+        moneyManager = MoneyManager.Instance;
     }
 
-    public bool canBuild() {
-        return toBuild != null;
-    }
+    public bool canBuild() => toBuild != null;
 
-    public bool hasMoney() {
-        return moneyManager.Money >= toBuild.cost;
-    }
+    public bool hasMoney() => moneyManager.money >= toBuild.cost;
 
-    public void selectPlantToBuild(PlantBlueprint plantBlueprint) {
+    public void selectPlantToBuild(PlantBlueprint plantBlueprint)
+    {
         toBuild = plantBlueprint;
         isRemoveToolSelected = false;
         isUpgrading = plantBlueprint == null ? false : plantBlueprint.isUpgradePlant;
-        AudioManager.instance.play("Select");
+        AudioManager.Instance.play("Select");
     }
 
-    public void buildPlantOn(Node node) {
-        if (moneyManager.Money < toBuild.cost) {
-            selectPlantToBuild(null);  
+    public void buildPlantOn(Node node)
+    {
+        if (moneyManager.money < toBuild.cost)
+        {
+            selectPlantToBuild(null);
             Debug.Log("Not enough money");
             return;
         }
 
         moneyManager.useMoney(toBuild.cost);
-        GameObject plant = (GameObject) Instantiate(toBuild.prefab, node.transform.position, node.transform.rotation);
+        var plant = Instantiate(toBuild.prefab, node.transform.position, node.transform.rotation);
         node.plant = plant;
         node.isPlantUpgradeable = toBuild.isUpgradeable;
         selectPlantToBuild(null);
-        AudioManager.instance.play("Plant");
+        AudioManager.Instance.play("Plant");
     }
 
-    public void upgradePlantOn(Node node) {
+    public void upgradePlantOn(Node node)
+    {
         // TODO : remove duplicate code
-        if (moneyManager.Money < toBuild.cost) {
-            selectPlantToBuild(null);  
+        if (moneyManager.money < toBuild.cost)
+        {
+            selectPlantToBuild(null);
             Debug.Log("Not enough money");
             return;
         }
 
-        if (!node.isPlantUpgradeable) {
-            selectPlantToBuild(null);  
+        if (!node.isPlantUpgradeable)
+        {
+            selectPlantToBuild(null);
             Debug.Log("Not upgradeable plant");
             return;
         }
-        
+
         moneyManager.useMoney(toBuild.cost);
-        GameObject plant = (GameObject) Instantiate(toBuild.prefab, node.transform.position, node.transform.rotation);
+        var plant = Instantiate(toBuild.prefab, node.transform.position, node.transform.rotation);
         Destroy(node.plant);
         node.plant = plant;
         node.isPlantUpgradeable = toBuild.isUpgradeable;
         selectPlantToBuild(null);
-        AudioManager.instance.play("Plant");
+        AudioManager.Instance.play("Plant");
     }
 
-    public void removeToolClicked() {
+    public void removeToolClicked()
+    {
         isRemoveToolSelected = !isRemoveToolSelected;
-        if (isRemoveToolSelected) {
+        if (isRemoveToolSelected)
+        {
             toBuild = null;
             isUpgrading = false;
         }
-        AudioManager.instance.play("Select");
+
+        AudioManager.Instance.play("Select");
     }
 }

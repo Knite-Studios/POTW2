@@ -1,44 +1,56 @@
 using UnityEngine;
-using UnityEngine.UI;
 
-public class SunFlower : MonoBehaviour {
+public class SunFlower : MonoBehaviour
+{
     public Canvas pointCanvas;
     public float pointDelay = 5f;
-    private float timer;
+    
     private bool isShowing;
-    void Start() {
+    private float timer;
+    
+    private void Start()
+    {
         timer = pointDelay;
         isShowing = false;
         pointCanvas.enabled = false;
     }
 
-    void Update() {  
-        if (timer <= 0f) {
+    private void Update()
+    {
+        if (timer <= 0f)
+        {
             timer = pointDelay;
-            if (isShowing) {
+            if (isShowing)
+            {
                 hidePoint();
-            } else {
+            }
+            else
+            {
                 showPoint();
             }
         }
+
         timer -= Time.deltaTime;
     }
 
-    public void pointClicked() {
+    public void pointClicked()
+    {
         Debug.Log("Point clicked");
-        MoneyManager.instance.onPointClicked();
+        MoneyManager.Instance.onPointClicked();
         timer = pointDelay;
         hidePoint();
     }
 
-    public void showPoint() {
+    public void showPoint()
+    {
         isShowing = true;
         pointCanvas.enabled = true;
         Debug.Log("normal anim started");
         gameObject.GetComponent<Animator>().Play("Normal");
     }
 
-    public void hidePoint() {
+    public void hidePoint()
+    {
         isShowing = false;
         pointCanvas.enabled = false;
     }

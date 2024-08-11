@@ -1,33 +1,40 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
-public class WaveSpawner : MonoBehaviour {
+
+public class WaveSpawner : MonoBehaviour
+{
     public static int zombiesAlive;
     public Transform enemyPrefab;
     public Text countDownText;
     public float timeBetweenWaves = 5f;
-    private float countDown = 0f;
-    private int waveIndex = 0;
     public Wave[] waves;
     public Transform[] spawnPositions;
+    private float countDown;
+    private int waveIndex;
 
-    void Start() {
+    private void Start()
+    {
         countDown = timeBetweenWaves;
         zombiesAlive = 0;
     }
 
-    void Update() {
-        if (zombiesAlive > 0) {
+    private void Update()
+    {
+        if (zombiesAlive > 0)
+        {
             return;
         }
-        
-        if (waveIndex == waves.Length) {
+
+        if (waveIndex == waves.Length)
+        {
             // TODO: do animation here
-            GameManager.instance.wonLevel();
-            this.enabled = false;
+            GameManager.Instance.wonLevel();
+            enabled = false;
         }
 
-        if (countDown <= 0f) {
+        if (countDown <= 0f)
+        {
             StartCoroutine(spawnWave());
             countDown = timeBetweenWaves;
             return;
@@ -37,23 +44,27 @@ public class WaveSpawner : MonoBehaviour {
         countDown -= Time.deltaTime;
         countDownText.text = Mathf.Round(countDown).ToString();
     }
-    
-    IEnumerator spawnWave() {
-        PlayerManager.instance.rounds++;
-        Wave wave = waves[waveIndex];
-        float t = 0f;
-        t += (wave.numberZombies * wave.spawnDelay);
-        WaveBar.instance.startBar(t);
 
-        for (int i=0; i<wave.numberZombies; i++) {
+    private IEnumerator spawnWave()
+    {
+        PlayerManager.Instance.rounds++;
+        var wave = waves[waveIndex];
+        var t = 0f;
+        t += wave.numberZombies * wave.spawnDelay;
+        WaveBar.Instance.startBar(t);
+
+        for (var i = 0; i < wave.numberZombies; i++)
+        {
             spawnEnemy(wave.zombie);
             yield return new WaitForSeconds(wave.spawnDelay);
         }
+
         waveIndex++;
     }
 
-    void spawnEnemy(GameObject prefab) {
-        int x = Random.Range(0, 5);
+    private void spawnEnemy(GameObject prefab)
+    {
+        var x = Random.Range(0, 5);
         Instantiate(prefab, spawnPositions[x].position, Quaternion.Euler(0, 0, 0));
         zombiesAlive++;
     }

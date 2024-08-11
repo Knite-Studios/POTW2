@@ -1,94 +1,129 @@
 using UnityEngine;
 
-public class Node : MonoBehaviour {
+public class Node : MonoBehaviour
+{
     public Color hoverColor;
     public Color errorColor;
-    private Color startColor;
-    private Renderer rend;
     [Header("HideInInspector")]
     public GameObject plant;
     [Header("HideInInspector")]
     public bool isPlantUpgradeable;
-    private BuildManager buildManager;
+    
+    private Renderer rend;
+    private Color startColor;
 
-    void Start() {
-        buildManager = BuildManager.instance;
-        rend =  GetComponent<Renderer>();
+    private void Start()
+    {
+        rend = GetComponent<Renderer>();
         startColor = rend.material.color;
     }
 
-    void OnMouseEnter() {
-        if (buildManager.isRemoveToolSelected) {
-            if (plant == null) {
-                rend.material.color = errorColor;
-            } else {
-                rend.material.color = hoverColor;
-            }
-            return;
-        }
-
-        if (!buildManager.canBuild()) {
-            return;
-        }
-
-        if (buildManager.hasMoney()) {
-            if (buildManager.isUpgrading) {
-                if (plant == null || !isPlantUpgradeable) {
-                    // TODO : check type of plant to upgrade
-                    rend.material.color = errorColor;
-                } else {
-                    rend.material.color = hoverColor;
-                }
-            } else {
-                if (plant != null) {
-                    rend.material.color = errorColor;
-                } else {
-                    rend.material.color = hoverColor;
-                }
-            }
-        } else {
-            rend.material.color = errorColor;
-        }
-    }
-
-    void OnMouseExit() {
-        rend.material.color = startColor;
-    }
-
-    void OnMouseDown() {
-        if (buildManager.isRemoveToolSelected) {
-            if (plant != null) {
+    private void OnMouseDown()
+    {
+        if (BuildManager.Instance.isRemoveToolSelected)
+        {
+            if (plant != null)
+            {
                 Destroy(plant);
                 isPlantUpgradeable = false;
-                AudioManager.instance.play("Remove");
-            } 
-            buildManager.removeToolClicked();
+                AudioManager.Instance.play("Remove");
+            }
+
+            BuildManager.Instance.removeToolClicked();
             rend.material.color = startColor;
         }
 
-        if (!buildManager.canBuild()) {
+        if (!BuildManager.Instance.canBuild())
+        {
             Debug.Log("plant is null");
             return;
         }
 
-        if (buildManager.isUpgrading) {
-            if (plant == null) {
+        if (BuildManager.Instance.isUpgrading)
+        {
+            if (plant == null)
+            {
                 // TODO : display on screen
                 Debug.Log("No plants to upgrade");
-            } else {
+            }
+            else
+            {
                 // TODO : make sure this is the correct plant
-                buildManager.upgradePlantOn(this);
+                BuildManager.Instance.upgradePlantOn(this);
                 rend.material.color = startColor;
             }
-        } else {
-            if (plant != null) {
+        }
+        else
+        {
+            if (plant != null)
+            {
                 // TODO : display on screen
                 Debug.Log("can't build here");
-            } else {
-                buildManager.buildPlantOn(this);
+            }
+            else
+            {
+                BuildManager.Instance.buildPlantOn(this);
                 rend.material.color = startColor;
             }
         }
 
+    }
+
+    private void OnMouseEnter()
+    {
+        if (BuildManager.Instance.isRemoveToolSelected)
+        {
+            if (plant == null)
+            {
+                rend.material.color = errorColor;
+            }
+            else
+            {
+                rend.material.color = hoverColor;
+            }
+
+            return;
+        }
+
+        if (!BuildManager.Instance.canBuild())
+        {
+            return;
+        }
+
+        if (BuildManager.Instance.hasMoney())
+        {
+            if (BuildManager.Instance.isUpgrading)
+            {
+                if (plant == null || !isPlantUpgradeable)
+                {
+                    // TODO : check type of plant to upgrade
+                    rend.material.color = errorColor;
+                }
+                else
+                {
+                    rend.material.color = hoverColor;
+                }
+            }
+            else
+            {
+                if (plant != null)
+                {
+                    rend.material.color = errorColor;
+                }
+                else
+                {
+                    rend.material.color = hoverColor;
+                }
+            }
+        }
+        else
+        {
+            rend.material.color = errorColor;
+        }
+    }
+
+    private void OnMouseExit()
+    {
+        rend.material.color = startColor;
     }
 }
