@@ -8,6 +8,7 @@ namespace MiniGame
     /// </summary>
     public class Hype : MonoBehaviour
     {
+        public float missOffset = 20.0f;
         public UnityAction OnHypeDestroyed;
 
         [SerializeField] private float speed = 200.0f;
@@ -19,12 +20,11 @@ namespace MiniGame
         private void Awake()
         {
             _rb = GetComponent<Rigidbody2D>();
-            // _rb.gravityScale = 0.0f;
         }
         
         private void Update()
         {
-            if (!(transform.position.x < Target.position.x - 20.0f)) return;
+            if (!(transform.position.x < Target.position.x - missOffset)) return;
             
             Debug.Log("<color=red>Missed the hype without pressing!</color>");
             Destroy(gameObject);

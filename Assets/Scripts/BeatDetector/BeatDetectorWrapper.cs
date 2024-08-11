@@ -12,8 +12,11 @@ namespace BeatDetector
         [DllImport("BeatDetector")]
         private static extern void ProcessSpectrum(float[] spectrum, int numBands, int numChannels, float[] avgSpectrum, out bool isBass, out bool isLow);
 
-        public AudioSource audioSource;
-
+        [Header("Spawning Settings")]
+        public float spawnRate = 1.5f;
+        
+        private float _spawnTimer;
+        private AudioSource _audioSource;
         private bool _bassDetected, _lowDetected;
         private float[] _freqAvgSpectrum = new float[4];
         private float[] _freqSpectrum = new float[1024 * 2];
@@ -24,9 +27,9 @@ namespace BeatDetector
             var audioClip = Array.Find(AudioManager.Instance.sounds, sound => sound.name == "GamePlayBackground").clip;
             
             // Now find the audio source with the audio clip in the audio manager object
-            audioSource = Array.Find(AudioManager.Instance.gameObject.GetComponents<AudioSource>(), 
+            _audioSource = Array.Find(AudioManager.Instance.gameObject.GetComponents<AudioSource>(), 
                 source => source.GetComponent<AudioSource>().clip == audioClip); 
-            if (audioSource == null)
+            if (_audioSource == null)
             {
                 Debug.Log("Audio source not found");
                 return;
@@ -43,16 +46,17 @@ namespace BeatDetector
 
         private void Update()
         {
-            var numChannels = audioSource.clip.channels;
+            var numChannels = _audioSource.clip.channels;
             
             // Get spectrum data from both channels
             var tempSampleLeft = new float[1024];
             var tempSampleRight = new float[1024];
 
-            audioSource.GetSpectrumData(tempSampleLeft, 0, FFTWindow.Rectangular);
+            // Might need to try catch the left channel too later
+            _audioSource.GetSpectrumData(tempSampleLeft, 0, FFTWindow.Rectangular);
             try
             {
-                audioSource.GetSpectrumData(tempSampleRight, 1, FFTWindow.Rectangular);
+                _audioSource.GetSpectrumData(tempSampleRight, 1, FFTWindow.Rectangular);
             }
             catch (ArgumentException e)
             {
@@ -75,17 +79,30 @@ namespace BeatDetector
 
         private void HandleDetection()
         {
+            if (_bassDetected && _spawnTimer <= 0.0f)
+            {
+                SpawnHype();
+                _spawnTimer = spawnRate;
+            }
+            
+            _spawnTimer -= Time.deltaTime;
+        }
+        
+        private void SpawnHype()
+        {
             if (_bassDetected)
             {
-                Debug.Log("Bass detected");
+                HypeManager.Instance.SpawnHype();
                 _bassDetected = false;
+                Debug.Log("Bass detected!");
             }
-
-            if (_lowDetected)
-            {
-                Debug.Log("Low-Mid Detected");
-                _lowDetected = false;
-            }
+            
+            // TODO: IDK maybe spawn a different object for low detection?
+            // if (_lowDetected)
+            // {
+            //     _lowDetected = false;
+            //     Debug.Log("Low detected!");
+            // }
         }
     }
 }
