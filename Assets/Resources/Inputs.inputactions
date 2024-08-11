@@ -1,0 +1,34 @@
+{
+    "name": "Inputs",
+    "maps": [
+        {
+            "name": "Controls",
+            "id": "7f42c43b-18bf-4e0e-9be1-a9ee612d9f0c",
+            "actions": [
+                {
+                    "name": "Hype",
+                    "type": "Button",
+                    "id": "1b154b53-56f8-4e76-a3f8-a2eba1e3e3f8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "ddae05ff-ca1d-45f7-8a6c-cfe09665aecd",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Hype",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
