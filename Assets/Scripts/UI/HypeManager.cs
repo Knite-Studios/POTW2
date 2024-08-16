@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using UnityEngine;
 using MiniGame;
-using UnityEngine;
+using System.Collections.Generic;
 
 public class HypeManager : Singleton<HypeManager>
 {
@@ -18,13 +18,13 @@ public class HypeManager : Singleton<HypeManager>
     public float niceHypeTime = 5.0f;
     public float prematureHypeTime = 10.0f;
 
-    private readonly Queue<Hype> _hypes = new();
+    private readonly Queue<Hype> _hypes = new Queue<Hype>();
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.H))
+        if (InputManager.Hype.triggered)
         {
-            SpawnHype();
+            TriggerHype();
         }
     }
 
@@ -52,20 +52,19 @@ public class HypeManager : Singleton<HypeManager>
         Debug.Log($"Distance: {distance}");
 
         int reward;
-        // TODO: Improve this lol.
         if (distance <= perfectHypeTime)
         {
-            reward = (int) (baseReward * perfectMultiplier);
+            reward = (int)(baseReward * perfectMultiplier);
             Debug.Log("PERFECT! 2x multiplier!");
         }
         else if (distance <= niceHypeTime)
         {
-            reward = (int) (baseReward * niceMultiplier);
+            reward = (int)(baseReward * niceMultiplier);
             Debug.Log("NICE CATCH! 1.5x multiplier!");
         }
         else if (distance <= prematureHypeTime)
         {
-            reward = (int) (baseReward * prematureMultiplier);
+            reward = (int)(baseReward * prematureMultiplier);
             Debug.Log("PREMATURE! 1.0x multiplier!");
         }
         else
@@ -74,9 +73,8 @@ public class HypeManager : Singleton<HypeManager>
             Debug.Log("Missed Hype!");
         }
         
-        MoneyManager.Instance.gainMoney(reward);
+        MoneyManager.Instance.CollectHype(reward);
         
         Destroy(hype.gameObject);
-        // Destroy(_hypeTrigger.gameObject);
     }
 }

@@ -23,22 +23,24 @@ namespace BeatDetector
 
         private void Start()
         {
-            // DUMB AUDIO MANAGER. WHO EVER MADE THIS KYS
-            var audioClip = Array.Find(AudioManager.Instance.sounds, sound => sound.name == "GamePlayBackground").clip;
-            
-            // Now find the audio source with the audio clip in the audio manager object
-            _audioSource = Array.Find(AudioManager.Instance.gameObject.GetComponents<AudioSource>(), 
-                source => source.GetComponent<AudioSource>().clip == audioClip); 
+            InitializeAudioSource();
+            InitializeBeatDetector();
+        }
+
+        private void InitializeAudioSource()
+        {
+            _audioSource = AudioManager.Instance.GetAudioSource("GamePlayBackground");
             if (_audioSource == null)
             {
-                Debug.Log("Audio source not found");
+                Debug.LogError("GamePlayBackground audio source not found in AudioManager");
+                enabled = false;
                 return;
             }
-            else
-            {
-                Debug.Log("Audio source found");
-            }
-            
+            Debug.Log("GamePlayBackground audio source found");
+        }
+
+        private void InitializeBeatDetector()
+        {
             var sampleRate = AudioSettings.outputSampleRate;
             var bufferSize = 1024;
             Initialize(sampleRate, bufferSize);
@@ -46,35 +48,44 @@ namespace BeatDetector
 
         private void Update()
         {
+            if (_audioSource == null || _audioSource.clip == null) return;
+
             var numChannels = _audioSource.clip.channels;
-            
-            // Get spectrum data from both channels
+            ProcessAudioData(numChannels);
+            HandleDetection();
+        }
+
+        private void ProcessAudioData(int numChannels)
+        {
             var tempSampleLeft = new float[1024];
             var tempSampleRight = new float[1024];
 
-            // Might need to try catch the left channel too later
             _audioSource.GetSpectrumData(tempSampleLeft, 0, FFTWindow.Rectangular);
-            try
+            
+            if (numChannels > 1)
             {
-                _audioSource.GetSpectrumData(tempSampleRight, 1, FFTWindow.Rectangular);
+                try
+                {
+                    _audioSource.GetSpectrumData(tempSampleRight, 1, FFTWindow.Rectangular);
+                }
+                catch (ArgumentException e)
+                {
+                    Debug.LogWarning($"Failed to get spectrum data from right channel: {e.Message}");
+                    Array.Clear(tempSampleRight, 0, tempSampleRight.Length);
+                }
             }
-            catch (ArgumentException e)
+            else
             {
-                Debug.Log($"<color=yellow>Failed to get spectrum data from right channel: {e.Message}</color>");
-                Array.Clear(tempSampleRight, 0, tempSampleRight.Length);
+                Array.Copy(tempSampleLeft, tempSampleRight, tempSampleLeft.Length);
             }
 
-            // Combine both channels into a single array
             for (var i = 0; i < 1024; i++)
             {
                 _freqSpectrum[i] = tempSampleLeft[i];
                 _freqSpectrum[i + 1024] = tempSampleRight[i];
             }
 
-            // Process the combined spectrum data
             ProcessSpectrum(_freqSpectrum, 2, numChannels, _freqAvgSpectrum, out _bassDetected, out _lowDetected);
-
-            HandleDetection();
         }
 
         private void HandleDetection()
@@ -96,13 +107,6 @@ namespace BeatDetector
                 _bassDetected = false;
                 Debug.Log("Bass detected!");
             }
-            
-            // TODO: IDK maybe spawn a different object for low detection?
-            // if (_lowDetected)
-            // {
-            //     _lowDetected = false;
-            //     Debug.Log("Low detected!");
-            // }
         }
     }
 }

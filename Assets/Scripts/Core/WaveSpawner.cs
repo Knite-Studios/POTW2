@@ -16,6 +16,7 @@ public class WaveSpawner : MonoBehaviour
 
     private void Start()
     {
+        // Initialize wave spawner
         countDown = timeBetweenWaves;
         zombiesAlive = 0;
         if (dangerText != null)
@@ -26,6 +27,7 @@ public class WaveSpawner : MonoBehaviour
 
     private void Update()
     {
+        // Check for wave completion and start new waves
         if (zombiesAlive > 0)
         {
             return;
@@ -33,7 +35,7 @@ public class WaveSpawner : MonoBehaviour
 
         if (waveIndex == waves.Length)
         {
-            GameManager.Instance.wonLevel();
+            GameManager.Instance.WonLevel();
             enabled = false;
             return;
         }
@@ -49,6 +51,7 @@ public class WaveSpawner : MonoBehaviour
 
     private IEnumerator SpawnWave()
     {
+        // Spawn a wave of zombies
         PlayerManager.Instance.rounds++;
         Wave currentWave = waves[waveIndex];
 
@@ -68,6 +71,7 @@ public class WaveSpawner : MonoBehaviour
 
     private IEnumerator ShowDangerText()
     {
+        // Display and fade out the danger text
         if (dangerText != null)
         {
             dangerText.gameObject.SetActive(true);
@@ -93,6 +97,7 @@ public class WaveSpawner : MonoBehaviour
 
     private void SpawnEnemy(GameObject prefab)
     {
+        // Spawn a single enemy at a random position
         int randomSpawnIndex = Random.Range(0, spawnPositions.Length);
         Instantiate(prefab, spawnPositions[randomSpawnIndex].position, Quaternion.identity);
         zombiesAlive++;

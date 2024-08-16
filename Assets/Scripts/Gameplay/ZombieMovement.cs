@@ -15,7 +15,7 @@ public class ZombieMovement : MonoBehaviour
     private void Start()
     {
         zombie = GetComponent<Zombie>();
-        var index = (int)(transform.position.x / 4);
+        int index = (int)(transform.position.x / 4);
         target = WayPoints.points[index];
 
         isEatingHash = Animator.StringToHash("isEating");
@@ -25,21 +25,21 @@ public class ZombieMovement : MonoBehaviour
     {
         if (!isEating)
         {
-            var dir = target.position - transform.position;
-            transform.Translate(dir.normalized * (zombie.speed * Time.deltaTime), Space.World);
+            Vector3 dir = target.position - transform.position;
+            transform.Translate(dir.normalized * (zombie.Speed * Time.deltaTime), Space.World);
 
             if (Vector3.Distance(transform.position, target.position) <= 0.5f)
             {
-                reachedEnd();
+                ReachedEnd();
             }
 
-            if (zombie.slownessTimer <= 0f)
+            if (zombie.SlownessTimer <= 0f)
             {
-                zombie.speed = zombie.defaultSpeed;
+                zombie.Speed = zombie.DefaultSpeed;
             }
             else
             {
-                zombie.slownessTimer -= Time.deltaTime;
+                zombie.SlownessTimer -= Time.deltaTime;
             }
         }
         else if (!plant)
@@ -51,7 +51,7 @@ public class ZombieMovement : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Plant"))
+        if (other.CompareTag("Plant"))
         {
             isEating = true;
             plant = other;
@@ -61,14 +61,14 @@ public class ZombieMovement : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("Plant"))
+        if (other.CompareTag("Plant"))
         {
             isEating = false;
             animator.SetBool(isEatingHash, false);
         }
     }
 
-    private void reachedEnd()
+    private void ReachedEnd()
     {
         WaveSpawner.zombiesAlive--;
         Destroy(gameObject);
