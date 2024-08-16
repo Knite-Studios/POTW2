@@ -20,15 +20,8 @@ public class Node : MonoBehaviour
     {
         if (BuildManager.Instance.IsRemoveToolSelected)
         {
-            if (plant != null)
-            {
-                Destroy(plant);
-                isPlantUpgradeable = false;
-                AudioManager.Instance.Play("Remove");
-            }
-
-            BuildManager.Instance.ToggleRemoveTool();
-            rend.material.color = startColor;
+            HandleRemoveTool();
+            return;
         }
 
         if (!BuildManager.Instance.CanBuild())
@@ -39,27 +32,50 @@ public class Node : MonoBehaviour
 
         if (BuildManager.Instance.IsUpgrading)
         {
-            if (plant == null)
-            {
-                Debug.Log("No plants to upgrade");
-            }
-            else
-            {
-                BuildManager.Instance.UpgradePlantOn(this);
-                rend.material.color = startColor;
-            }
+            HandleUpgrade();
         }
         else
         {
-            if (plant != null)
-            {
-                Debug.Log("Can't build here, space occupied");
-            }
-            else
-            {
-                BuildManager.Instance.BuildPlantOn(this);
-                rend.material.color = startColor;
-            }
+            HandleBuild();
+        }
+
+        rend.material.color = startColor;
+    }
+
+    private void HandleRemoveTool()
+    {
+        if (plant != null)
+        {
+            Destroy(plant);
+            isPlantUpgradeable = false;
+            AudioManager.Instance.Play("Remove");
+        }
+
+        BuildManager.Instance.ToggleRemoveTool();
+        rend.material.color = startColor;
+    }
+
+    private void HandleUpgrade()
+    {
+        if (plant == null)
+        {
+            Debug.Log("No plants to upgrade");
+        }
+        else
+        {
+            BuildManager.Instance.UpgradePlantOn(this);
+        }
+    }
+
+    private void HandleBuild()
+    {
+        if (plant != null)
+        {
+            Debug.Log("Can't build here, space occupied");
+        }
+        else
+        {
+            BuildManager.Instance.BuildPlantOn(this);
         }
     }
 

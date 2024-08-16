@@ -26,6 +26,10 @@ public class Shop : MonoBehaviour
             {
                 item.costText.text = $"{item.plantBlueprint.cost}$";
             }
+            else
+            {
+                Debug.LogWarning($"Cost text is missing for plant: {item.plantBlueprint.prefab.name}");
+            }
         }
     }
 
@@ -38,7 +42,15 @@ public class Shop : MonoBehaviour
         }
 
         var item = shopItems[index];
-        Debug.Log($"Purchased plant {index + 1}");
+        if (item.plantBlueprint == null)
+        {
+            Debug.LogError($"Plant blueprint is missing for index: {index}");
+            return;
+        }
+
+        Debug.Log($"Attempting to purchase plant: {item.plantBlueprint.prefab.name}");
+        
         BuildManager.Instance.SelectPlantToBuild(item.plantBlueprint);
+        Debug.Log($"Selected plant for building: {item.plantBlueprint.prefab.name}");
     }
 }

@@ -17,7 +17,7 @@ public class BuildManager : Singleton<BuildManager>
 
     public bool CanBuild() => plantToBuild != null;
 
-    public bool HasMoney() => moneyManager.Money >= plantToBuild.cost;
+    public bool HasMoney() => plantToBuild != null && moneyManager.Money >= plantToBuild.cost;
 
     public void SelectPlantToBuild(PlantBlueprint plantBlueprint)
     {
@@ -25,12 +25,14 @@ public class BuildManager : Singleton<BuildManager>
         IsRemoveToolSelected = false;
         IsUpgrading = plantBlueprint != null && plantBlueprint.isUpgradePlant;
         AudioManager.Instance.Play("Select");
+        Debug.Log($"Selected plant: {(plantToBuild != null ? plantToBuild.prefab.name : "None")}");
     }
 
     public void BuildPlantOn(Node node)
     {
         if (!CanBuildPlant())
         {
+            Debug.Log("Cannot build plant: " + (plantToBuild == null ? "No plant selected" : "Not enough money"));
             return;
         }
 
@@ -62,14 +64,19 @@ public class BuildManager : Singleton<BuildManager>
         }
 
         AudioManager.Instance.Play("Select");
+        Debug.Log($"Remove tool {(IsRemoveToolSelected ? "selected" : "deselected")}");
     }
 
     private bool CanBuildPlant()
     {
+        if (plantToBuild == null)
+        {
+            Debug.Log("No plant selected to build");
+            return false;
+        }
         if (moneyManager.Money < plantToBuild.cost)
         {
-            SelectPlantToBuild(null);
-            Debug.Log("Not enough money");
+            Debug.Log("Not enough money to build");
             return false;
         }
         return true;
@@ -84,7 +91,6 @@ public class BuildManager : Singleton<BuildManager>
 
         if (!node.isPlantUpgradeable)
         {
-            SelectPlantToBuild(null);
             Debug.Log("Not upgradeable plant");
             return false;
         }
@@ -96,6 +102,13 @@ public class BuildManager : Singleton<BuildManager>
         GameObject plant = Instantiate(plantToBuild.prefab, node.transform.position, node.transform.rotation);
         node.plant = plant;
         node.isPlantUpgradeable = plantToBuild.isUpgradeable;
-        SelectPlantToBuild(null);
+        Debug.Log($"Plant {plantToBuild.prefab.name} instantiated");
+        // Don't clear plantToBuild here to allow building multiple plants of the same type
+    }
+
+    public void ClearSelectedPlant()
+    {
+        plantToBuild = null;
+        Debug.Log("Selected plant cleared");
     }
 }

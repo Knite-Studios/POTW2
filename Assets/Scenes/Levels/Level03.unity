@@ -1960,12 +1960,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 1091482812}
     m_Modifications:
     - target: {fileID: -6323171346688251106, guid: 781514dbe6913e248b2f1e02437ed36a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -6323171346688251106, guid: 781514dbe6913e248b2f1e02437ed36a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1091482813}
     - target: {fileID: -6323171346688251106, guid: 781514dbe6913e248b2f1e02437ed36a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: purchasePlant2
+      value: PurchasePlant
+      objectReference: {fileID: 0}
+    - target: {fileID: -6323171346688251106, guid: 781514dbe6913e248b2f1e02437ed36a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 775199614432698400, guid: 781514dbe6913e248b2f1e02437ed36a, type: 3}
       propertyPath: m_Name
@@ -3381,12 +3389,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 1091482812}
     m_Modifications:
     - target: {fileID: -6323171346688251106, guid: 781514dbe6913e248b2f1e02437ed36a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -6323171346688251106, guid: 781514dbe6913e248b2f1e02437ed36a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1091482813}
     - target: {fileID: -6323171346688251106, guid: 781514dbe6913e248b2f1e02437ed36a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: purchasePlant3
+      value: PurchasePlant
+      objectReference: {fileID: 0}
+    - target: {fileID: -6323171346688251106, guid: 781514dbe6913e248b2f1e02437ed36a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 775199614432698400, guid: 781514dbe6913e248b2f1e02437ed36a, type: 3}
       propertyPath: m_Name
@@ -3932,7 +3948,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca9c6aa597104681b175b9576f2fb652, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnRate: 1.5
+  spawnRate: 1.75
+  detectionThreshold: -3
 --- !u!4 &694091483
 Transform:
   m_ObjectHideFlags: 0
@@ -4902,12 +4919,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 1091482812}
     m_Modifications:
     - target: {fileID: -6323171346688251106, guid: 781514dbe6913e248b2f1e02437ed36a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -6323171346688251106, guid: 781514dbe6913e248b2f1e02437ed36a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1091482813}
     - target: {fileID: -6323171346688251106, guid: 781514dbe6913e248b2f1e02437ed36a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: purchasePlant4
+      value: PurchasePlant
+      objectReference: {fileID: 0}
+    - target: {fileID: -6323171346688251106, guid: 781514dbe6913e248b2f1e02437ed36a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 775199614432698400, guid: 781514dbe6913e248b2f1e02437ed36a, type: 3}
       propertyPath: m_Name
@@ -5861,7 +5886,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 274.2788, y: -73.486755}
+  m_AnchoredPosition: {x: 343, y: -105}
   m_SizeDelta: {x: 549.5576, y: 145.97351}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1091482813
@@ -5880,28 +5905,24 @@ MonoBehaviour:
   - plantBlueprint:
       prefab: {fileID: 3128677779696767476, guid: fcb3d9dc5734a4045a30ac6b90521253, type: 3}
       cost: 100
-      costText: {fileID: 1766797365}
       isUpgradePlant: 0
       isUpgradeable: 1
     costText: {fileID: 1766797365}
   - plantBlueprint:
       prefab: {fileID: 2626507805085806352, guid: a6e7437dd2f25d04383de4be4b9c9bbd, type: 3}
       cost: 50
-      costText: {fileID: 417429281}
       isUpgradePlant: 0
       isUpgradeable: 0
     costText: {fileID: 417429281}
   - plantBlueprint:
       prefab: {fileID: 2115049726936213113, guid: ac9f82a50d3f5754ea99c20e8d0f9a99, type: 3}
       cost: 150
-      costText: {fileID: 641823709}
       isUpgradePlant: 0
       isUpgradeable: 0
     costText: {fileID: 641823709}
   - plantBlueprint:
       prefab: {fileID: 5869860799604309612, guid: e38f992abd1ec0b498d2780f0820aaa6, type: 3}
       cost: 250
-      costText: {fileID: 897523838}
       isUpgradePlant: 1
       isUpgradeable: 0
     costText: {fileID: 897523838}
@@ -8052,9 +8073,21 @@ PrefabInstance:
     m_TransformParent: {fileID: 1091482812}
     m_Modifications:
     - target: {fileID: -6323171346688251106, guid: 781514dbe6913e248b2f1e02437ed36a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -6323171346688251106, guid: 781514dbe6913e248b2f1e02437ed36a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1091482813}
+    - target: {fileID: -6323171346688251106, guid: 781514dbe6913e248b2f1e02437ed36a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PurchasePlant
+      objectReference: {fileID: 0}
+    - target: {fileID: -6323171346688251106, guid: 781514dbe6913e248b2f1e02437ed36a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 775199614432698400, guid: 781514dbe6913e248b2f1e02437ed36a, type: 3}
       propertyPath: m_Name
       value: Plant1Button

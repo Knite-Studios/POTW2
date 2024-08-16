@@ -13,18 +13,21 @@ namespace BeatDetector
         private static extern void ProcessSpectrum(float[] spectrum, int numBands, int numChannels, float[] avgSpectrum, out bool isBass, out bool isLow);
 
         [Header("Spawning Settings")]
-        public float spawnRate = 1.5f;
-        
+        public float spawnRate = 1.5f; 
+        public float detectionThreshold = -3f; 
+
         private float _spawnTimer;
         private AudioSource _audioSource;
         private bool _bassDetected, _lowDetected;
         private float[] _freqAvgSpectrum = new float[4];
         private float[] _freqSpectrum = new float[1024 * 2];
+        private float _lastBeatTime;
 
         private void Start()
         {
             InitializeAudioSource();
             InitializeBeatDetector();
+            _lastBeatTime = -spawnRate; // Initialize to allow immediate first beat
         }
 
         private void InitializeAudioSource()
@@ -90,10 +93,14 @@ namespace BeatDetector
 
         private void HandleDetection()
         {
-            if (_bassDetected && _spawnTimer <= 0.0f)
+            if (_bassDetected && _spawnTimer <= 0.0f && Time.time - _lastBeatTime >= spawnRate)
             {
-                SpawnHype();
-                _spawnTimer = spawnRate;
+                if (_freqAvgSpectrum[0] > detectionThreshold) // Check if bass frequency exceeds threshold
+                {
+                    SpawnHype();
+                    _spawnTimer = spawnRate;
+                    _lastBeatTime = Time.time;
+                }
             }
             
             _spawnTimer -= Time.deltaTime;
@@ -101,12 +108,8 @@ namespace BeatDetector
         
         private void SpawnHype()
         {
-            if (_bassDetected)
-            {
-                HypeManager.Instance.SpawnHype();
-                _bassDetected = false;
-                Debug.Log("Bass detected!");
-            }
+            HypeManager.Instance.SpawnHype();
+            Debug.Log($"Bass detected! Intensity: {_freqAvgSpectrum[0]}");
         }
     }
 }
