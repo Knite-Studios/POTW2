@@ -5,11 +5,12 @@ using UnityEngine.UI;
 public class WaveSpawner : MonoBehaviour
 {
     public static int zombiesAlive;
-    public Transform enemyPrefab;
-    public Text countDownText;
-    public float timeBetweenWaves = 5f;
-    public Wave[] waves;
-    public Transform[] spawnPositions;
+
+    [SerializeField] private Text dangerText;
+    [SerializeField] private float timeBetweenWaves = 5f;
+    [SerializeField] private Wave[] waves;
+    [SerializeField] private Transform[] spawnPositions;
+
     private float countDown;
     private int waveIndex;
 
@@ -17,6 +18,10 @@ public class WaveSpawner : MonoBehaviour
     {
         countDown = timeBetweenWaves;
         zombiesAlive = 0;
+        if (dangerText != null)
+        {
+            dangerText.gameObject.SetActive(false);
+        }
     }
 
     private void Update()
@@ -28,44 +33,68 @@ public class WaveSpawner : MonoBehaviour
 
         if (waveIndex == waves.Length)
         {
-            // TODO: do animation here
             GameManager.Instance.wonLevel();
             enabled = false;
-        }
-
-        if (countDown <= 0f)
-        {
-            StartCoroutine(spawnWave());
-            countDown = timeBetweenWaves;
             return;
         }
 
-
         countDown -= Time.deltaTime;
-        countDownText.text = Mathf.Round(countDown).ToString();
+
+        if (countDown <= 0f)
+        {
+            StartCoroutine(SpawnWave());
+            countDown = timeBetweenWaves;
+        }
     }
 
-    private IEnumerator spawnWave()
+    private IEnumerator SpawnWave()
     {
         PlayerManager.Instance.rounds++;
-        var wave = waves[waveIndex];
-        var t = 0f;
-        t += wave.numberZombies * wave.spawnDelay;
-        WaveBar.Instance.startBar(t);
+        Wave currentWave = waves[waveIndex];
 
-        for (var i = 0; i < wave.numberZombies; i++)
+        yield return StartCoroutine(ShowDangerText());
+
+        float waveDuration = currentWave.numberZombies * currentWave.spawnDelay;
+        WaveBar.Instance.startBar(waveDuration);
+
+        for (int i = 0; i < currentWave.numberZombies; i++)
         {
-            spawnEnemy(wave.zombie);
-            yield return new WaitForSeconds(wave.spawnDelay);
+            SpawnEnemy(currentWave.zombie);
+            yield return new WaitForSeconds(currentWave.spawnDelay);
         }
 
         waveIndex++;
     }
 
-    private void spawnEnemy(GameObject prefab)
+    private IEnumerator ShowDangerText()
     {
-        var x = Random.Range(0, 5);
-        Instantiate(prefab, spawnPositions[x].position, Quaternion.Euler(0, 0, 0));
+        if (dangerText != null)
+        {
+            dangerText.gameObject.SetActive(true);
+            dangerText.text = "Danger Incoming!";
+            dangerText.color = new Color(dangerText.color.r, dangerText.color.g, dangerText.color.b, 1f);
+
+            yield return new WaitForSeconds(2f);
+
+            float fadeDuration = 1f;
+            float elapsedTime = 0f;
+
+            while (elapsedTime < fadeDuration)
+            {
+                elapsedTime += Time.deltaTime;
+                float alpha = Mathf.Lerp(1f, 0f, elapsedTime / fadeDuration);
+                dangerText.color = new Color(dangerText.color.r, dangerText.color.g, dangerText.color.b, alpha);
+                yield return null;
+            }
+
+            dangerText.gameObject.SetActive(false);
+        }
+    }
+
+    private void SpawnEnemy(GameObject prefab)
+    {
+        int randomSpawnIndex = Random.Range(0, spawnPositions.Length);
+        Instantiate(prefab, spawnPositions[randomSpawnIndex].position, Quaternion.identity);
         zombiesAlive++;
     }
 }
