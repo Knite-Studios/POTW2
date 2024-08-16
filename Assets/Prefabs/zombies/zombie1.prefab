@@ -1949,11 +1949,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cd51bc85ac6379489bfb0396dff2081, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultSpeed: 1.15
-  defaultHealth: 40
-  health: 0
-  speed: 0
-  slownessTimer: 0
+  DefaultSpeed: 1.15
+  DefaultHealth: 20
 --- !u!54 &4321643184024243164
 Rigidbody:
   m_ObjectHideFlags: 0
