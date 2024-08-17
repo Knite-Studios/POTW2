@@ -10542,6 +10542,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1202614533}
+  - component: {fileID: 1202614534}
   m_Layer: 0
   m_Name: HypeManager
   m_TagString: Untagged
@@ -10564,6 +10565,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1202614534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1202614531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b1389d2620b464bbc0754fe29f90405, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseReward: 25
+  perfectMultiplier: 2
+  niceMultiplier: 1.5
+  prematureMultiplier: 1
+  hypePrefab: {fileID: 7360542228579455537, guid: 0877e37a8cc64f040bb4049a8cf6444f, type: 3}
+  hypeTrigger: {fileID: 734827256}
+  hypeSpawnPoint: {fileID: 7565182497970928161}
+  perfectHypeTime: 2
+  niceHypeTime: 5
+  prematureHypeTime: 10
 --- !u!1001 &1212270095
 PrefabInstance:
   m_ObjectHideFlags: 0
