@@ -400,6 +400,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1610345196}
     m_Modifications:
     - target: {fileID: 3598644868034406316, guid: 067451a744fba6a4a85ad8184212d17b, type: 3}
+      propertyPath: isBrain
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3598644868034406316, guid: 067451a744fba6a4a85ad8184212d17b, type: 3}
       propertyPath: objectDiedCallback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1670285900}
@@ -1261,6 +1265,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1610345196}
     m_Modifications:
+    - target: {fileID: 3598644868034406316, guid: 067451a744fba6a4a85ad8184212d17b, type: 3}
+      propertyPath: isBrain
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3598644868034406316, guid: 067451a744fba6a4a85ad8184212d17b, type: 3}
       propertyPath: objectDiedCallback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -5447,10 +5455,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1670285900}
     - target: {fileID: 6078451809604296393, guid: 067451a744fba6a4a85ad8184212d17b, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6078451809604296393, guid: 067451a744fba6a4a85ad8184212d17b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 20.637451
       objectReference: {fileID: 0}
@@ -7232,6 +7236,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1610345196}
     m_Modifications:
+    - target: {fileID: 3598644868034406316, guid: 067451a744fba6a4a85ad8184212d17b, type: 3}
+      propertyPath: isBrain
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3598644868034406316, guid: 067451a744fba6a4a85ad8184212d17b, type: 3}
       propertyPath: objectDiedCallback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -15421,6 +15429,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1610345196}
     m_Modifications:
     - target: {fileID: 3598644868034406316, guid: 067451a744fba6a4a85ad8184212d17b, type: 3}
+      propertyPath: isBrain
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3598644868034406316, guid: 067451a744fba6a4a85ad8184212d17b, type: 3}
       propertyPath: objectDiedCallback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1670285900}
@@ -17049,10 +17061,6 @@ PrefabInstance:
     - target: {fileID: 5171369381318691324, guid: 1e62d7bd9c0dd1547a7f54c3015a9eed, type: 3}
       propertyPath: m_Name
       value: startNode (4)
-      objectReference: {fileID: 0}
-    - target: {fileID: 8223235859221621861, guid: 1e62d7bd9c0dd1547a7f54c3015a9eed, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8223235859221621861, guid: 1e62d7bd9c0dd1547a7f54c3015a9eed, type: 3}
       propertyPath: m_LocalPosition.x
