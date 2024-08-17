@@ -31,7 +31,7 @@ public class MoneyManager : Singleton<MoneyManager>
     {
         if (moneyCounter != null)
         {
-            moneyCounter.text = $"Hype = {Money}";
+            moneyCounter.text = "{Money}";
         }
         else
         {
