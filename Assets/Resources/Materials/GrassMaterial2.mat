@@ -102,8 +102,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - Brightness_Rim: 2
-    - Rim_Power: 5
+    - Brightness_Rim: 3.74
+    - Rim_Power: 8.09
     - Toon_Ramp_Offset: 0.5
     - Toon_Ramp_Smoothness: 0
     - _AlphaClip: 0
@@ -144,7 +144,7 @@ Material:
     m_Colors:
     - Toon_Ramp_Tint: {r: 0.490566, g: 0.490566, b: 0.490566, a: 1}
     - _BaseColor: {r: 0, g: 0.5943396, b: 0, a: 0.5176471}
-    - _Color: {r: 0, g: 0.3679245, b: 0, a: 0.5176471}
+    - _Color: {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 0.5176471}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   m_BuildTextureStacks: []
