@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class WaveSpawner : MonoBehaviour
+public class WaveSpawner : Singleton<WaveSpawner>
 {
     public static int zombiesAlive;
 
@@ -13,12 +13,18 @@ public class WaveSpawner : MonoBehaviour
 
     private float countDown;
     private int waveIndex;
+    private Coroutine spawnCoroutine;
 
     private void Start()
     {
-        // Initialize wave spawner
+        InitializeWaveSpawner();
+    }
+
+    private void InitializeWaveSpawner()
+    {
         countDown = timeBetweenWaves;
         zombiesAlive = 0;
+        waveIndex = 0;
         if (dangerText != null)
         {
             dangerText.gameObject.SetActive(false);
@@ -27,7 +33,6 @@ public class WaveSpawner : MonoBehaviour
 
     private void Update()
     {
-        // Check for wave completion and start new waves
         if (zombiesAlive > 0)
         {
             return;
@@ -44,21 +49,23 @@ public class WaveSpawner : MonoBehaviour
 
         if (countDown <= 0f)
         {
-            StartCoroutine(SpawnWave());
+            spawnCoroutine = StartCoroutine(SpawnWave());
             countDown = timeBetweenWaves;
         }
     }
 
     private IEnumerator SpawnWave()
     {
-        // Spawn a wave of zombies
         PlayerManager.Instance.rounds++;
         Wave currentWave = waves[waveIndex];
 
         yield return StartCoroutine(ShowDangerText());
 
         float waveDuration = currentWave.numberZombies * currentWave.spawnDelay;
-        WaveBar.Instance.startBar(waveDuration);
+        if (WaveBar.Instance != null)
+        {
+            WaveBar.Instance.StartBar(waveDuration);
+        }
 
         for (int i = 0; i < currentWave.numberZombies; i++)
         {
@@ -71,7 +78,6 @@ public class WaveSpawner : MonoBehaviour
 
     private IEnumerator ShowDangerText()
     {
-        // Display and fade out the danger text
         if (dangerText != null)
         {
             dangerText.gameObject.SetActive(true);
@@ -97,9 +103,40 @@ public class WaveSpawner : MonoBehaviour
 
     private void SpawnEnemy(GameObject prefab)
     {
-        // Spawn a single enemy at a random position
+        if (spawnPositions == null || spawnPositions.Length == 0)
+        {
+            Debug.LogError("No spawn positions set for WaveSpawner");
+            return;
+        }
+
         int randomSpawnIndex = Random.Range(0, spawnPositions.Length);
-        Instantiate(prefab, spawnPositions[randomSpawnIndex].position, Quaternion.identity);
-        zombiesAlive++;
+        if (spawnPositions[randomSpawnIndex] != null)
+        {
+            Instantiate(prefab, spawnPositions[randomSpawnIndex].position, Quaternion.identity);
+            zombiesAlive++;
+        }
+        else
+        {
+            Debug.LogError($"Spawn position at index {randomSpawnIndex} is null");
+        }
+    }
+
+    public void ResetWaves()
+    {
+        if (spawnCoroutine != null)
+        {
+            StopCoroutine(spawnCoroutine);
+        }
+
+        InitializeWaveSpawner();
+
+        // Destroy all existing zombies
+        GameObject[] zombies = GameObject.FindGameObjectsWithTag("Zombie");
+        foreach (GameObject zombie in zombies)
+        {
+            Destroy(zombie);
+        }
+
+        zombiesAlive = 0;
     }
 }

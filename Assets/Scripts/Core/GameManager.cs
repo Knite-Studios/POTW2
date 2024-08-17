@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Collections;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -18,9 +19,14 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
-        // Initialize game state and audio
+        InitializeGame();
+    }
+
+    private void InitializeGame()
+    {
         IsGameEnded = false;
         IsPaused = false;
+        Time.timeScale = 1f;
         AudioManager.Instance.Stop("MenuBackground");
         if (playBackgroundMusic)
         {
@@ -30,7 +36,6 @@ public class GameManager : Singleton<GameManager>
 
     private void Update()
     {
-        // Handle pause menu toggle
         if (IsGameEnded) return;
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -41,11 +46,13 @@ public class GameManager : Singleton<GameManager>
 
     public void EndGame()
     {
-        // Set up game over state
         if (IsGameEnded) return;
 
         gameOverUi.SetActive(true);
-        roundsText.text = PlayerManager.Instance.rounds.ToString();
+        if (roundsText != null && PlayerManager.Instance != null)
+        {
+            roundsText.text = PlayerManager.Instance.rounds.ToString();
+        }
         IsGameEnded = true;
         Debug.Log("Game over!");
         Time.timeScale = 0f;
@@ -55,12 +62,12 @@ public class GameManager : Singleton<GameManager>
     public void TogglePauseMenu()
     {
         IsPaused = !IsPaused;
-        
-        // Toggle pause menu and time scale
-        pauseMenuUi.SetActive(IsPaused);
+        if (pauseMenuUi != null)
+        {
+            pauseMenuUi.SetActive(IsPaused);
+        }
         Time.timeScale = IsPaused ? 0f : 1f;
 
-        // Pause or unpause audio
         if (IsPaused)
         {
             PauseAudio();
@@ -83,25 +90,85 @@ public class GameManager : Singleton<GameManager>
 
     public void Retry()
     {
-        // Restart the current level
-        Time.timeScale = 1f;
+        StartCoroutine(RetryCoroutine());
+    }
+
+    private IEnumerator RetryCoroutine()
+    {
+        // Reset game state
+        IsGameEnded = false;
         IsPaused = false;
+        Time.timeScale = 1f;
+
+        // Unpause audio
         UnpauseAudio();
-        sceneChanger.TransitionTo(SceneManager.GetActiveScene().name);
+
+        // Clean up existing objects
+        yield return StartCoroutine(CleanupScene());
+
+        // Reload the current scene
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.name);
+
+        // Wait for the scene to load
+        yield return null;
+
+        // Re-initialize the game
+        InitializeGame();
+
+        // Reset other managers
+        if (PlayerManager.Instance != null)
+            PlayerManager.Instance.ResetRounds();
+        if (HypeManager.Instance != null)
+            HypeManager.Instance.ResetHype();
+        if (WaveSpawner.Instance != null)
+            WaveSpawner.Instance.ResetWaves();
+    }
+
+    private IEnumerator CleanupScene()
+    {
+        // Destroy all non-persistent objects
+        GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>();
+        foreach (GameObject obj in allObjects)
+        {
+            if (!obj.scene.isLoaded)
+                continue;
+
+            if (obj.hideFlags == HideFlags.DontSave || obj.hideFlags == HideFlags.HideAndDontSave)
+                continue;
+
+            if (obj.transform.parent == null)
+                Destroy(obj);
+        }
+
+        // Wait for a frame to ensure objects are destroyed
+        yield return null;
     }
 
     public void ReturnToMenu()
     {
-        // Go back to the main menu
         Time.timeScale = 1f;
         IsPaused = false;
         UnpauseAudio();
-        sceneChanger.TransitionTo(MenuScene);
+        if (sceneChanger != null)
+        {
+            sceneChanger.TransitionTo(MenuScene);
+        }
+        else
+        {
+            SceneManager.LoadScene(MenuScene);
+        }
     }
 
     public void WonLevel()
     {
-        // Transition to level selector after winning
-        sceneChanger.TransitionTo(LevelSelectorScene);
+        if (sceneChanger != null)
+        {
+            sceneChanger.TransitionTo(LevelSelectorScene);
+        }
+        else
+        {
+            SceneManager.LoadScene(LevelSelectorScene);
+        }
     }
 }

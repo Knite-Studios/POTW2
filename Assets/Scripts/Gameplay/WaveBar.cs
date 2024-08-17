@@ -6,7 +6,7 @@ public class WaveBar : MonoBehaviour
     public static WaveBar Instance { get; private set; }
 
     [SerializeField] private Slider waveSlider;
-    public bool isPaused = true;
+    public bool IsPaused { get; private set; } = true;
     
     private float countDown;
     private float time;
@@ -25,7 +25,7 @@ public class WaveBar : MonoBehaviour
 
     private void Update()
     {
-        if (!isPaused)
+        if (!IsPaused)
         {
             if (countDown < time)
             {
@@ -35,22 +35,22 @@ public class WaveBar : MonoBehaviour
         }
     }
 
-    public void startBar(float time)
+    public void StartBar(float duration)
     {
-        this.time = time;
-        waveSlider.maxValue = time;
+        time = duration;
+        waveSlider.maxValue = duration;
         countDown = 0f;
         waveSlider.value = countDown;
-        isPaused = false;
+        IsPaused = false;
     }
 
-    public void pause()
+    public void Pause()
     {
-        isPaused = true;
+        IsPaused = true;
     }
 
-    public void resume()
+    public void Resume()
     {
-        isPaused = false;
+        IsPaused = false;
     }
 }

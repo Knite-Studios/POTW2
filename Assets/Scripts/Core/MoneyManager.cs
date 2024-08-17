@@ -31,7 +31,7 @@ public class MoneyManager : Singleton<MoneyManager>
     {
         if (moneyCounter != null)
         {
-            moneyCounter.text = "{Money}";
+            moneyCounter.text = $"{Money}"; // Corrected string interpolation
         }
         else
         {
