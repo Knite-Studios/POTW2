@@ -75,7 +75,7 @@ public class WaveSpawner : MonoBehaviour
         if (dangerText != null)
         {
             dangerText.gameObject.SetActive(true);
-            dangerText.text = "Danger Incoming!";
+            dangerText.text = "WAVE INCOMING!";
             dangerText.color = new Color(dangerText.color.r, dangerText.color.g, dangerText.color.b, 1f);
 
             yield return new WaitForSeconds(2f);
