@@ -3960,9 +3960,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1670285900}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: menu
+        m_MethodName: ReturnToMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4128,9 +4128,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1670285900}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: retry
+        m_MethodName: Retry
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6267,7 +6267,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1670285900}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: toggle
+        m_MethodName: TogglePauseMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8989,7 +8989,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1670285900}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: retry
+        m_MethodName: Retry
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9593,24 +9593,36 @@ MonoBehaviour:
       cost: 100
       isUpgradePlant: 0
       isUpgradeable: 1
+      cooldown: 0
+      cooldownImage: {fileID: 0}
+      isOnCooldown: 0
     costText: {fileID: 1766797365}
   - plantBlueprint:
       prefab: {fileID: 2626507805085806352, guid: a6e7437dd2f25d04383de4be4b9c9bbd, type: 3}
       cost: 50
       isUpgradePlant: 0
       isUpgradeable: 0
+      cooldown: 0
+      cooldownImage: {fileID: 0}
+      isOnCooldown: 0
     costText: {fileID: 417429281}
   - plantBlueprint:
       prefab: {fileID: 2115049726936213113, guid: ac9f82a50d3f5754ea99c20e8d0f9a99, type: 3}
       cost: 150
       isUpgradePlant: 0
       isUpgradeable: 0
+      cooldown: 0
+      cooldownImage: {fileID: 0}
+      isOnCooldown: 0
     costText: {fileID: 641823709}
   - plantBlueprint:
       prefab: {fileID: 5869860799604309612, guid: e38f992abd1ec0b498d2780f0820aaa6, type: 3}
       cost: 250
       isUpgradePlant: 1
       isUpgradeable: 0
+      cooldown: 0
+      cooldownImage: {fileID: 0}
+      isOnCooldown: 0
     costText: {fileID: 897523838}
 --- !u!114 &1091482814
 MonoBehaviour:
@@ -10550,16 +10562,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b1389d2620b464bbc0754fe29f90405, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseReward: 25
-  perfectMultiplier: 2
-  niceMultiplier: 1.5
-  prematureMultiplier: 1
-  hypePrefab: {fileID: 7360542228579455537, guid: 0877e37a8cc64f040bb4049a8cf6444f, type: 3}
-  hypeTrigger: {fileID: 734827256}
-  hypeSpawnPoint: {fileID: 7565182497970928161}
-  perfectHypeTime: 2
-  niceHypeTime: 5
-  prematureHypeTime: 10
 --- !u!4 &1202614533
 Transform:
   m_ObjectHideFlags: 0
@@ -11938,7 +11940,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1670285900}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: menu
+        m_MethodName: ReturnToMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
