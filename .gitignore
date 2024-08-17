@@ -26,11 +26,8 @@
 # Visual Studio cache directory
 .vs/
 
-# IntelliJ cache directory
+# IntelliJ IDEA settings directory
 .idea/
-
-# Visual Studio Code cache directory
-#.vscode/
 
 # Gradle cache directory
 .gradle/
@@ -77,8 +74,5 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
-# Build Materials
+# Build directory
 Build/
-UserSettings/
-
-ProjectSettings/

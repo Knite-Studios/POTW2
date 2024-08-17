@@ -9,14 +9,6 @@ namespace MiniGame
     public class HypeTrigger : MonoBehaviour
     {
         public Action OnHypeTriggerDestroyed;
-
-        private void Update()
-        {
-            if (InputManager.Hype.triggered)
-            {
-                HypeManager.Instance.TriggerHype();
-            }
-        }
         
         private void OnDestroy()
         {

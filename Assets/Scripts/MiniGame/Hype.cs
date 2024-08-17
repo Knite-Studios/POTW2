@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace MiniGame
@@ -14,6 +15,7 @@ namespace MiniGame
         [SerializeField] private float speed = 200.0f;
 
         public Transform Target { get; private set; }
+        public bool CanTrigger { get; private set; }
 
         private Rigidbody2D _rb;
 
@@ -47,6 +49,13 @@ namespace MiniGame
         {
             Target = owner.transform;
             _rb.velocity = Vector2.left * speed;
+        }
+
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (!other.GetComponent<HypeTrigger>()) return;
+            
+            CanTrigger = true;
         }
     }
 }

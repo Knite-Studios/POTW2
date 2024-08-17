@@ -7158,7 +7158,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 1, y: 1}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -7169,7 +7169,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 250, y: 80}
   m_EdgeRadius: 0
 --- !u!114 &734827258
 MonoBehaviour:
@@ -10578,15 +10578,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseReward: 25
-  perfectMultiplier: 2
-  niceMultiplier: 1.5
-  prematureMultiplier: 1
+  caughtMultiplier: 1
   hypePrefab: {fileID: 7360542228579455537, guid: 0877e37a8cc64f040bb4049a8cf6444f, type: 3}
   hypeTrigger: {fileID: 734827256}
   hypeSpawnPoint: {fileID: 7565182497970928161}
-  perfectHypeTime: 2
-  niceHypeTime: 5
-  prematureHypeTime: 10
+  caughtDistance: 500
+  caughtPrefab: {fileID: 7360542228579455537, guid: 8b03b3983ac9e41489a48e37ee5785ae, type: 3}
+  missedPrefab: {fileID: 7360542228579455537, guid: 9a44db7eb6f563742847f69d4355023c, type: 3}
+  <HypeCount>k__BackingField: 0
 --- !u!1001 &1212270095
 PrefabInstance:
   m_ObjectHideFlags: 0
