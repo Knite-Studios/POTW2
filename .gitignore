@@ -80,3 +80,5 @@ crashlytics-build.properties
 # Build Materials
 Build/
 UserSettings/
+
+ProjectSettings/
