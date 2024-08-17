@@ -47,6 +47,12 @@ public class Shop : MonoBehaviour
             Debug.LogError($"Plant blueprint is missing for index: {index}");
             return;
         }
+        
+        if (item.plantBlueprint.isOnCooldown)
+        {
+            Debug.Log("Plant is on cooldown");
+            return;
+        }
 
         Debug.Log($"Attempting to purchase plant: {item.plantBlueprint.prefab.name}");
         
