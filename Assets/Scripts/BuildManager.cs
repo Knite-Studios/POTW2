@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class BuildManager : Singleton<BuildManager>
@@ -37,11 +38,21 @@ public class BuildManager : Singleton<BuildManager>
             Debug.Log("Not enough money");
             return;
         }
+        
+        if (toBuild.isOnCooldown)
+        {
+            selectPlantToBuild(null);
+            Debug.Log("Plant is on cooldown");
+            return;
+        }
 
         moneyManager.useMoney(toBuild.cost);
         var plant = Instantiate(toBuild.prefab, node.transform.position, node.transform.rotation);
         node.plant = plant;
         node.isPlantUpgradeable = toBuild.isUpgradeable;
+        
+        StartCoroutine(startCooldown(toBuild));
+        
         selectPlantToBuild(null);
         AudioManager.Instance.play("Plant");
     }
@@ -68,6 +79,9 @@ public class BuildManager : Singleton<BuildManager>
         Destroy(node.plant);
         node.plant = plant;
         node.isPlantUpgradeable = toBuild.isUpgradeable;
+        
+        StartCoroutine(startCooldown(toBuild));
+        
         selectPlantToBuild(null);
         AudioManager.Instance.play("Plant");
     }
@@ -82,5 +96,12 @@ public class BuildManager : Singleton<BuildManager>
         }
 
         AudioManager.Instance.play("Select");
+    }
+    
+    private IEnumerator startCooldown(PlantBlueprint plantBlueprint)
+    {
+        plantBlueprint.isOnCooldown = true;
+        yield return new WaitForSeconds(plantBlueprint.cooldown);
+        plantBlueprint.isOnCooldown = false;
     }
 }

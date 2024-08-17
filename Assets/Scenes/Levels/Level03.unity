@@ -5882,24 +5882,32 @@ MonoBehaviour:
     costText: {fileID: 1766797365}
     isUpgradePlant: 0
     isUpgradeable: 1
+    cooldown: 2
+    isOnCooldown: 0
   plant2:
     prefab: {fileID: 2626507805085806352, guid: a6e7437dd2f25d04383de4be4b9c9bbd, type: 3}
     cost: 50
     costText: {fileID: 417429281}
     isUpgradePlant: 0
     isUpgradeable: 0
+    cooldown: 2
+    isOnCooldown: 0
   plant3:
     prefab: {fileID: 2115049726936213113, guid: ac9f82a50d3f5754ea99c20e8d0f9a99, type: 3}
     cost: 150
     costText: {fileID: 641823709}
     isUpgradePlant: 0
     isUpgradeable: 0
+    cooldown: 2
+    isOnCooldown: 0
   plant4:
     prefab: {fileID: 5869860799604309612, guid: e38f992abd1ec0b498d2780f0820aaa6, type: 3}
     cost: 250
     costText: {fileID: 897523838}
     isUpgradePlant: 1
     isUpgradeable: 0
+    cooldown: 2
+    isOnCooldown: 0
 --- !u!114 &1091482814
 MonoBehaviour:
   m_ObjectHideFlags: 0

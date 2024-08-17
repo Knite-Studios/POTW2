@@ -10,4 +10,7 @@ public class PlantBlueprint
     public Text costText;
     public bool isUpgradePlant;
     public bool isUpgradeable;
+    public float cooldown;
+    
+    [HideInInspector] public bool isOnCooldown;
 }

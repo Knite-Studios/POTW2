@@ -24,24 +24,48 @@ public class Shop : MonoBehaviour
 
     public void purchasePlant1()
     {
+        if (plant1.isOnCooldown)
+        {
+            Debug.Log("Plant 1 is on cooldown");
+            return;
+        }
+        
         Debug.Log("purchased plant 1");
         BuildManager.Instance.selectPlantToBuild(plant1);
     }
 
     public void purchasePlant2()
     {
+        if (plant2.isOnCooldown)
+        {
+            Debug.Log("Plant 2 is on cooldown");
+            return;
+        }
+        
         Debug.Log("purchased plant 2");
         BuildManager.Instance.selectPlantToBuild(plant2);
     }
 
     public void purchasePlant3()
     {
+        if (plant3.isOnCooldown)
+        {
+            Debug.Log("Plant 3 is on cooldown");
+            return;
+        }
+        
         Debug.Log("purchased plant 3");
         BuildManager.Instance.selectPlantToBuild(plant3);
     }
 
     public void purchasePlant4()
     {
+        if (plant4.isOnCooldown)
+        {
+            Debug.Log("Plant 4 is on cooldown");
+            return;
+        }
+        
         Debug.Log("purchased plant 4");
         BuildManager.Instance.selectPlantToBuild(plant4);
     }
