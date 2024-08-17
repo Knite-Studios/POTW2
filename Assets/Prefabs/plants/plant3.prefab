@@ -35,6 +35,7 @@ Transform:
   m_Children:
   - {fileID: 9008736620475506431}
   - {fileID: 6925721240144826007}
+  - {fileID: 7466675812387619451}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &7230376916640709791
@@ -114,7 +115,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc75bafaf80ef8048925a8ed3ac2048a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 5
+  maxHealth: 5
+  isBrain: 0
   objectDiedCallback:
     m_PersistentCalls:
       m_Calls: []
@@ -201,6 +203,76 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1001 &6923245844479141264
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1590327200977108163}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 8535b6fb1c675954f9a1a9158f59459a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8535b6fb1c675954f9a1a9158f59459a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.25
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8535b6fb1c675954f9a1a9158f59459a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8535b6fb1c675954f9a1a9158f59459a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8535b6fb1c675954f9a1a9158f59459a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8535b6fb1c675954f9a1a9158f59459a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8535b6fb1c675954f9a1a9158f59459a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8535b6fb1c675954f9a1a9158f59459a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8535b6fb1c675954f9a1a9158f59459a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8535b6fb1c675954f9a1a9158f59459a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4236654079472971942, guid: 8535b6fb1c675954f9a1a9158f59459a, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b062cc340bc0f38419a19dfe9b9e11ef, type: 2}
+    - target: {fileID: 849326716049805035, guid: 8535b6fb1c675954f9a1a9158f59459a, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b062cc340bc0f38419a19dfe9b9e11ef, type: 2}
+    - target: {fileID: 919132149155446097, guid: 8535b6fb1c675954f9a1a9158f59459a, type: 3}
+      propertyPath: m_Name
+      value: Tallboy
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8535b6fb1c675954f9a1a9158f59459a, type: 3}
+--- !u!4 &7466675812387619451 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8535b6fb1c675954f9a1a9158f59459a, type: 3}
+  m_PrefabInstance: {fileID: 6923245844479141264}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8831505288025848084
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -266,12 +338,20 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 24bac4892bb3011489d427c357864d85, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 24bac4892bb3011489d427c357864d85, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 63e3d5e8cacdcef468d5b9c020236cb9, type: 2}
     - target: {fileID: 919132149155446097, guid: 24bac4892bb3011489d427c357864d85, type: 3}
       propertyPath: m_Name
       value: BounceSpeaker (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 24bac4892bb3011489d427c357864d85, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

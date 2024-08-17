@@ -140,7 +140,7 @@ MonoBehaviour:
   firstFireTime: 1
   secondFireTime: 0.2
   zombieTag: Zombie
-  bulletPrefab: {fileID: 8008133890772263078, guid: 651ffe21a0d16484a8d14cd8e1dba7d6, type: 3}
+  bulletPrefab: {fileID: 8008133890772263078, guid: b383da48f138fec449569043c20a7991, type: 3}
 --- !u!1001 &2446872834464037844
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -151,15 +151,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 909a6db09d7fda942b3f1a8a58b388d6, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2100
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 909a6db09d7fda942b3f1a8a58b388d6, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2100
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 909a6db09d7fda942b3f1a8a58b388d6, type: 3}
       propertyPath: m_LocalScale.z
-      value: 2100
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 909a6db09d7fda942b3f1a8a58b388d6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -175,23 +175,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 909a6db09d7fda942b3f1a8a58b388d6, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.5
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 909a6db09d7fda942b3f1a8a58b388d6, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 909a6db09d7fda942b3f1a8a58b388d6, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.5
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 909a6db09d7fda942b3f1a8a58b388d6, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 909a6db09d7fda942b3f1a8a58b388d6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -90
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 909a6db09d7fda942b3f1a8a58b388d6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
