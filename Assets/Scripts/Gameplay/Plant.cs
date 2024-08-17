@@ -18,6 +18,7 @@ public class Plant : MonoBehaviour
     {
         hasDoubleShoot = secondFireTime != 0f;
         InvokeRepeating(nameof(UpdateTarget), 0f, 0.5f);
+        Debug.Log($"Plant initialized. Fire range: {fireRange}, Zombie tag: {zombieTag}");
     }
 
     private void Update()
@@ -52,6 +53,8 @@ public class Plant : MonoBehaviour
     private void UpdateTarget()
     {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag(zombieTag);
+        Debug.Log($"Found {enemies.Length} enemies with tag '{zombieTag}'");
+
         float shortestDistance = Mathf.Infinity;
         GameObject closestEnemy = null;
 
@@ -68,14 +71,22 @@ public class Plant : MonoBehaviour
         }
 
         target = closestEnemy != null ? closestEnemy.transform : null;
+        Debug.Log(target != null ? $"New target acquired at distance {shortestDistance}" : "No target in range");
     }
 
     private bool IsEnemyInRange(GameObject enemy, out float distanceToEnemy)
     {
         distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
-        return Mathf.Abs(enemy.transform.position.x - transform.position.x) < 1 &&
-               enemy.transform.position.z > transform.position.z &&
-               distanceToEnemy < fireRange;
+        bool inRange = Mathf.Abs(enemy.transform.position.x - transform.position.x) < 1 &&
+                       enemy.transform.position.z > transform.position.z &&
+                       distanceToEnemy < fireRange;
+        
+        if (inRange)
+        {
+            Debug.Log($"Enemy in range at distance {distanceToEnemy}");
+        }
+        
+        return inRange;
     }
 
     private void Shoot()
@@ -84,5 +95,6 @@ public class Plant : MonoBehaviour
         GameObject bulletGO = Instantiate(bulletPrefab, bulletPosition, transform.rotation);
         Bullet bullet = bulletGO.GetComponent<Bullet>();
         bullet.Seek(target);
+        Debug.Log($"Bullet shot towards target at {target.position}");
     }
 }

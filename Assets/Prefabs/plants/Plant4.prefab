@@ -337,10 +337,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 589153206951698075, guid: 3280a713b4e3540408dadddd1c1980e9, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b88b594134b439f4b83516c5bc7b791a, type: 2}
     - target: {fileID: 919132149155446097, guid: 3280a713b4e3540408dadddd1c1980e9, type: 3}
       propertyPath: m_Name
       value: ShooterV2
       objectReference: {fileID: 0}
+    - target: {fileID: 3219882101630006985, guid: 3280a713b4e3540408dadddd1c1980e9, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b88b594134b439f4b83516c5bc7b791a, type: 2}
+    - target: {fileID: 4728379385595246809, guid: 3280a713b4e3540408dadddd1c1980e9, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b88b594134b439f4b83516c5bc7b791a, type: 2}
+    - target: {fileID: 8521902485874960664, guid: 3280a713b4e3540408dadddd1c1980e9, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b88b594134b439f4b83516c5bc7b791a, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

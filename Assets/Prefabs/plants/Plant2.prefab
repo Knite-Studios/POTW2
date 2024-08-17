@@ -140,7 +140,7 @@ MonoBehaviour:
   firstFireTime: 1
   secondFireTime: 0.2
   zombieTag: Zombie
-  bulletPrefab: {fileID: 8008133890772263078, guid: b383da48f138fec449569043c20a7991, type: 3}
+  bulletPrefab: {fileID: 8008133890772263078, guid: 651ffe21a0d16484a8d14cd8e1dba7d6, type: 3}
 --- !u!1001 &2446872834464037844
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -205,10 +205,18 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1990968323811559735, guid: 909a6db09d7fda942b3f1a8a58b388d6, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7ed8cbaf2fad58649b6fc996302da501, type: 2}
     - target: {fileID: 919132149155446097, guid: 909a6db09d7fda942b3f1a8a58b388d6, type: 3}
       propertyPath: m_Name
       value: Shooter
       objectReference: {fileID: 0}
+    - target: {fileID: 8442510506162454399, guid: 909a6db09d7fda942b3f1a8a58b388d6, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7ed8cbaf2fad58649b6fc996302da501, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -254,11 +254,11 @@ PrefabInstance:
     - target: {fileID: -4236654079472971942, guid: 8535b6fb1c675954f9a1a9158f59459a, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: b062cc340bc0f38419a19dfe9b9e11ef, type: 2}
+      objectReference: {fileID: 2100000, guid: 63e3d5e8cacdcef468d5b9c020236cb9, type: 2}
     - target: {fileID: 849326716049805035, guid: 8535b6fb1c675954f9a1a9158f59459a, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: b062cc340bc0f38419a19dfe9b9e11ef, type: 2}
+      objectReference: {fileID: 2100000, guid: 63e3d5e8cacdcef468d5b9c020236cb9, type: 2}
     - target: {fileID: 919132149155446097, guid: 8535b6fb1c675954f9a1a9158f59459a, type: 3}
       propertyPath: m_Name
       value: Tallboy

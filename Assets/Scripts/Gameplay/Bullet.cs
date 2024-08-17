@@ -8,10 +8,16 @@ public class Bullet : MonoBehaviour
 
     private Transform target;
 
+    private void Start()
+    {
+        Debug.Log($"Bullet initialized. Damage: {damage}, Speed: {speed}, Can slow zombie: {canSlowZombie}");
+    }
+
     private void Update()
     {
         if (target == null)
         {
+            Debug.Log("Bullet target lost. Destroying bullet.");
             Destroy(gameObject);
             return;
         }
@@ -31,6 +37,7 @@ public class Bullet : MonoBehaviour
     public void Seek(Transform newTarget)
     {
         target = newTarget;
+        Debug.Log($"Bullet seeking new target at {target.position}");
     }
 
     private void HitTarget()
@@ -41,6 +48,7 @@ public class Bullet : MonoBehaviour
         }
 
         AudioManager.Instance.Play("HitNormal");
+        Debug.Log("Bullet hit target. Destroying bullet.");
         Destroy(gameObject);
     }
 
@@ -52,11 +60,17 @@ public class Bullet : MonoBehaviour
             if (canSlowZombie)
             {
                 zombie.SlowAndDamage(damage, 2f);
+                Debug.Log($"Applied slow and {damage} damage to zombie");
             }
             else
             {
                 zombie.TakeDamage(damage);
+                Debug.Log($"Applied {damage} damage to zombie");
             }
+        }
+        else
+        {
+            Debug.LogWarning("Target is not a zombie!");
         }
     }
 }
