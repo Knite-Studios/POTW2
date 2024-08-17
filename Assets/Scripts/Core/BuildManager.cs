@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class BuildManager : Singleton<BuildManager>
@@ -21,6 +22,12 @@ public class BuildManager : Singleton<BuildManager>
 
     public void SelectPlantToBuild(PlantBlueprint plantBlueprint)
     {
+        if (plantBlueprint.isOnCooldown)
+        {
+            Debug.Log("Plant is on cooldown");
+            return;
+        }
+        
         plantToBuild = plantBlueprint;
         IsRemoveToolSelected = false;
         IsUpgrading = plantBlueprint != null && plantBlueprint.isUpgradePlant;
@@ -35,7 +42,15 @@ public class BuildManager : Singleton<BuildManager>
             Debug.Log("Cannot build plant: " + (plantToBuild == null ? "No plant selected" : "Not enough money"));
             return;
         }
+        
+        if (plantToBuild.isOnCooldown)
+        {
+            SelectPlantToBuild(null);
+            Debug.Log("Plant is on cooldown");
+            return;
+        }
 
+        StartCoroutine(StartCooldown(plantToBuild));
         moneyManager.UseMoney(plantToBuild.cost);
         InstantiatePlant(node);
         AudioManager.Instance.Play("Plant");
@@ -47,7 +62,15 @@ public class BuildManager : Singleton<BuildManager>
         {
             return;
         }
-
+        
+        if (plantToBuild.isOnCooldown)
+        {
+            SelectPlantToBuild(null);
+            Debug.Log("Plant is on cooldown");
+            return;
+        }
+        
+        StartCoroutine(StartCooldown(plantToBuild));
         moneyManager.UseMoney(plantToBuild.cost);
         Object.Destroy(node.plant);
         InstantiatePlant(node);
@@ -110,5 +133,29 @@ public class BuildManager : Singleton<BuildManager>
     {
         plantToBuild = null;
         Debug.Log("Selected plant cleared");
+    }
+    
+    private IEnumerator StartCooldown(PlantBlueprint plantBlueprint)
+    {
+        plantBlueprint.isOnCooldown = true;
+
+        if (plantBlueprint.cooldownImage)
+            plantBlueprint.cooldownImage.fillAmount = 1;
+        
+        var cooldown = plantBlueprint.cooldown;
+        var time = 0f;
+        
+        while (time < cooldown)
+        {
+            time += Time.deltaTime;
+            var fillAmount = Mathf.Lerp(1, 0, time / cooldown);
+            if (plantBlueprint.cooldownImage)
+                plantBlueprint.cooldownImage.fillAmount = fillAmount;
+            yield return null;
+        }
+
+        plantBlueprint.isOnCooldown = false;
+        if (plantBlueprint.cooldownImage)
+            plantBlueprint.cooldownImage.fillAmount = 0;
     }
 }
