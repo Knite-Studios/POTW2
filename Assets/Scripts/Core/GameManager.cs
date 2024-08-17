@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class GameManager : Singleton<GameManager>
 {
     public static bool IsGameEnded { get; private set; }
+    public static bool IsPaused { get; private set; }
 
     public const string MenuScene = "MainMenu";
     public const string LevelSelectorScene = "LevelSelector";
@@ -19,6 +20,7 @@ public class GameManager : Singleton<GameManager>
     {
         // Initialize game state and audio
         IsGameEnded = false;
+        IsPaused = false;
         AudioManager.Instance.Stop("MenuBackground");
         if (playBackgroundMusic)
         {
@@ -47,19 +49,44 @@ public class GameManager : Singleton<GameManager>
         IsGameEnded = true;
         Debug.Log("Game over!");
         Time.timeScale = 0f;
+        PauseAudio();
     }
 
     public void TogglePauseMenu()
     {
+        IsPaused = !IsPaused;
+        
         // Toggle pause menu and time scale
-        pauseMenuUi.SetActive(!pauseMenuUi.activeSelf);
-        Time.timeScale = pauseMenuUi.activeSelf ? 0f : 1f;
+        pauseMenuUi.SetActive(IsPaused);
+        Time.timeScale = IsPaused ? 0f : 1f;
+
+        // Pause or unpause audio
+        if (IsPaused)
+        {
+            PauseAudio();
+        }
+        else
+        {
+            UnpauseAudio();
+        }
+    }
+
+    private void PauseAudio()
+    {
+        AudioManager.Instance.PauseAll();
+    }
+
+    private void UnpauseAudio()
+    {
+        AudioManager.Instance.UnpauseAll();
     }
 
     public void Retry()
     {
         // Restart the current level
         Time.timeScale = 1f;
+        IsPaused = false;
+        UnpauseAudio();
         sceneChanger.TransitionTo(SceneManager.GetActiveScene().name);
     }
 
@@ -67,6 +94,8 @@ public class GameManager : Singleton<GameManager>
     {
         // Go back to the main menu
         Time.timeScale = 1f;
+        IsPaused = false;
+        UnpauseAudio();
         sceneChanger.TransitionTo(MenuScene);
     }
 

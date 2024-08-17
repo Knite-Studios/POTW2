@@ -12,6 +12,8 @@ public class Shop : MonoBehaviour
     }
 
     public List<ShopItem> shopItems = new List<ShopItem>();
+    
+    [SerializeField] private GameObject instructionsUI;
 
     private void Start()
     {
@@ -47,7 +49,7 @@ public class Shop : MonoBehaviour
             Debug.LogError($"Plant blueprint is missing for index: {index}");
             return;
         }
-        
+
         if (item.plantBlueprint.isOnCooldown)
         {
             Debug.Log("Plant is on cooldown");
@@ -55,8 +57,25 @@ public class Shop : MonoBehaviour
         }
 
         Debug.Log($"Attempting to purchase plant: {item.plantBlueprint.prefab.name}");
-        
+
         BuildManager.Instance.SelectPlantToBuild(item.plantBlueprint);
         Debug.Log($"Selected plant for building: {item.plantBlueprint.prefab.name}");
+    }
+
+    public void ShowInstructionsUI(bool show)
+    {
+        if (instructionsUI != null)
+        {
+            instructionsUI.SetActive(show);
+        }
+        else
+        {
+            Debug.LogWarning("Instructions UI is not assigned in the Shop script");
+        }
+    }
+
+    public void OnPlantPlaced()
+    {
+        ShowInstructionsUI(false);
     }
 }

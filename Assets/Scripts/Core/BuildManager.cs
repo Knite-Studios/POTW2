@@ -8,12 +8,14 @@ public class BuildManager : Singleton<BuildManager>
     
     private MoneyManager moneyManager;
     private PlantBlueprint plantToBuild;
+    private Shop shop; // Reference to the Shop script
 
     private void Start()
     {
         IsRemoveToolSelected = false;
         IsUpgrading = false;
         moneyManager = MoneyManager.Instance;
+        shop = FindObjectOfType<Shop>(); // Find the Shop script in the scene
     }
 
     public bool CanBuild() => plantToBuild != null;
@@ -33,6 +35,16 @@ public class BuildManager : Singleton<BuildManager>
         IsUpgrading = plantBlueprint != null && plantBlueprint.isUpgradePlant;
         AudioManager.Instance.Play("Select");
         Debug.Log($"Selected plant: {(plantToBuild != null ? plantToBuild.prefab.name : "None")}");
+        shop.ShowInstructionsUI(true);
+    }
+
+    public void DeselectPlant()
+    {
+        plantToBuild = null;
+        IsRemoveToolSelected = false;
+        IsUpgrading = false;
+        Debug.Log("Plant deselected");
+        shop.ShowInstructionsUI(false);
     }
 
     public void BuildPlantOn(Node node)
@@ -54,6 +66,7 @@ public class BuildManager : Singleton<BuildManager>
         moneyManager.UseMoney(plantToBuild.cost);
         InstantiatePlant(node);
         AudioManager.Instance.Play("Plant");
+        shop.OnPlantPlaced();
     }
 
     public void UpgradePlantOn(Node node)
@@ -75,6 +88,7 @@ public class BuildManager : Singleton<BuildManager>
         Object.Destroy(node.plant);
         InstantiatePlant(node);
         AudioManager.Instance.Play("Plant");
+        shop.OnPlantPlaced();
     }
 
     public void ToggleRemoveTool()
@@ -88,6 +102,7 @@ public class BuildManager : Singleton<BuildManager>
 
         AudioManager.Instance.Play("Select");
         Debug.Log($"Remove tool {(IsRemoveToolSelected ? "selected" : "deselected")}");
+        shop.ShowInstructionsUI(false);
     }
 
     private bool CanBuildPlant()
@@ -133,6 +148,7 @@ public class BuildManager : Singleton<BuildManager>
     {
         plantToBuild = null;
         Debug.Log("Selected plant cleared");
+        shop.ShowInstructionsUI(false);
     }
     
     private IEnumerator StartCooldown(PlantBlueprint plantBlueprint)

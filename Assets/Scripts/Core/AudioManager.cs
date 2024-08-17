@@ -71,6 +71,28 @@ public class AudioManager : Singleton<AudioManager>
         }
     }
 
+    public void PauseAll()
+    {
+        foreach (var sound in soundDictionary.Values)
+        {
+            if (sound.source.isPlaying)
+            {
+                sound.source.Pause();
+            }
+        }
+    }
+
+    public void UnpauseAll()
+    {
+        foreach (var sound in soundDictionary.Values)
+        {
+            if (sound.source.clip != null)
+            {
+                sound.source.UnPause();
+            }
+        }
+    }
+
     public bool IsPlaying(string name)
     {
         if (soundDictionary.TryGetValue(name, out Sound s))
